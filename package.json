@@ -1,0 +1,25 @@
+{
+  "name": "be-capstone-gamelab",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "db:create": "sequelize db:create",
+    "db:drop": "sequelize db:drop",
+    "db:migrate": "sequelize db:migrate",
+    "db:seed": "sequelize db:seed:undo:all && sequelize db:seed:all",
+    "start": "node index.js"
+  },
+  "author": "TheReVeaLz",
+  "license": "LGPL-3.0+",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.9.7",
+    "sequelize": "^6.37.3",
+    "sequelize-cli": "^6.6.2",
+    "uuid": "^9.0.1"
+  }
+}

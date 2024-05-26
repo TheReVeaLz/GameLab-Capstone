@@ -1,0 +1,20 @@
+{
+    "names": [
+        "Johnny",
+        "Fikri",
+        "Brian",
+        "Ranggawarsita",
+        "Jayabaya"
+    ],
+    
+    "roles": [
+        {
+            "order": 0,
+            "roleName": "OWNER"
+        },
+        {
+            "order": 1,
+            "roleName": "KARYAWAN"
+        }
+    ]
+}
