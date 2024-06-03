@@ -1,8 +1,9 @@
 'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Presences', {
+  async up (queryInterface, Sequelize) {
+    await queryInterface.createTable('Payslips', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,22 +11,25 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id',
-        },
-        onDelete: 'CASCADE'
+        type: Sequelize.INTEGER
       },
-      checkIn: {
+      periodStart: {
         type: Sequelize.DATE
       },
-      checkOut: {
+      periodEnd: {
         type: Sequelize.DATE
       },
-      status: {
-        type: Sequelize.ENUM,
-        values: ['LATE', 'ONTIME', 'LEAVE']
+      salary: {
+        type: Sequelize.FLOAT
+      },
+      allowances: {
+        type: Sequelize.FLOAT
+      },
+      deductions: {
+        type: Sequelize.FLOAT
+      },
+      netWorth: {
+        type: Sequelize.FLOAT
       },
       createdAt: {
         allowNull: false,
@@ -37,7 +41,8 @@ module.exports = {
       }
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Presences');
+
+  async down (queryInterface, Sequelize) {
+    await queryInterface.dropTable('Payslips');
   }
 };

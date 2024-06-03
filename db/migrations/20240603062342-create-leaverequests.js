@@ -1,8 +1,9 @@
 'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Presences', {
+  async up (queryInterface, Sequelize) {
+    await queryInterface.createTable('LeaveRequests', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,21 +12,23 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'Users',
-          key: 'id',
-        },
-        onDelete: 'CASCADE'
+          key: 'id'
+        }
       },
-      checkIn: {
+      requestDate: {
         type: Sequelize.DATE
       },
-      checkOut: {
+      startDate: {
+        type: Sequelize.DATE
+      },
+      endDate: {
         type: Sequelize.DATE
       },
       status: {
-        type: Sequelize.ENUM,
-        values: ['LATE', 'ONTIME', 'LEAVE']
+        type: Sequelize.ENUM('LATE', 'ONTIME', 'LEAVE')
       },
       createdAt: {
         allowNull: false,
@@ -37,7 +40,8 @@ module.exports = {
       }
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Presences');
+
+  async down (queryInterface, Sequelize) {
+    await queryInterface.dropTable('LeaveRequests');
   }
 };

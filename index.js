@@ -4,6 +4,7 @@ const cors = require('cors')
 // const { router: productsRouter } = require('./routes/products');
 // const { router: usersRouter } = require('./routes/users');
 const adminRouter = require("./routes/v1/user.routes")
+const prenseceRouter = require("./routes/v1/presence.routes")
 
 const { User } = require("./app/models")
 
@@ -22,6 +23,7 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/api/v1/user", adminRouter);
+app.use("/api/v1/user", prenseceRouter);
 
 // Menggunakan router untuk endpoint /products
 // app.use('/admin', productsRouter);
