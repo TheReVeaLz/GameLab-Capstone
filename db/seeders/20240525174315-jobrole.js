@@ -21,7 +21,7 @@ module.exports = {
       updatedAt: new Date()
     }))
 
-    await queryInterface.bulkInsert('Roles', roles)
+    await queryInterface.bulkInsert('JobRoles', roles)
   },
 
   async down (queryInterface, Sequelize) {
@@ -31,9 +31,9 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    const rolesIds = seeds.map((seed) => (
-      seed.roleId
+    const roleNames = seeds.map((seed) => (
+      seed.roleName
     ))
-    await queryInterface.bulkDelete('Roles', { roleId: { [Op.in]: rolesIds } });
+    await queryInterface.bulkDelete('JobRoles', { roleName: { [Op.in]: roleNames } });
   }
 };

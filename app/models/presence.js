@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     presenceDate: DataTypes.DATE,
     checkIn: DataTypes.DATE,
     checkOut: DataTypes.DATE,
+    overtime: DataTypes.INTEGER,
     status: {
       type: DataTypes.ENUM,
       values: ['LATE', 'ONTIME', 'LEAVE']

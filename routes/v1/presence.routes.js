@@ -4,7 +4,7 @@ const AuthMiddleware = require('../../middlewares/auth')
 
 const router = express.Router();
 
-router.post('/presence', AuthMiddleware.authorize, presenceController.createPresence);
+router.post('/presence', AuthMiddleware.authorize, presenceController.presence);
 router.get('/presence/:id', AuthMiddleware.authorize, presenceController.getPresenceById);
 router.get('/presenceAll', AuthMiddleware.authorize, presenceController.getAllPresences);
 router.get('/presence', AuthMiddleware.authorize, presenceController.getAllPresencesUser);

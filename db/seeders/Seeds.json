@@ -10,11 +10,18 @@
     "roles": [
         {
             "order": 0,
-            "roleName": "OWNER"
+            "roleName": "OWNER",
+            "salary": 2e7
         },
         {
             "order": 1,
-            "roleName": "KARYAWAN"
+            "roleName": "ADMIN",
+            "salary": 9e6
+        },
+        {
+            "order": 1,
+            "roleName": "KARYAWAN",
+            "salary": 7e6
         }
     ]
 }

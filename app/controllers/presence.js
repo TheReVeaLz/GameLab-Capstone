@@ -1,10 +1,10 @@
 const presenceService = require("../services/presence.js");
 
-const createPresence = async (req, res) => {
+const presence = async (req, res) => {
   try {
       const data = req.body;
       data.userId = req.user.id;
-      const presence = await presenceService.createPresence(data);
+      const presence = await presenceService.presence(data);
       res.status(201).json({ status: "OK", message: "Presence data was created successfully.", data: presence });
   } catch (err) {
       res.status(err.statusCode || 500).json({ status: "FAIL", message: err.message });
@@ -19,6 +19,7 @@ const getAllPresences = async (req, res) => {
       res.status(err.statusCode || 400).json({ status: "FAIL", message: err.message });
   }
 }
+
 const getAllPresencesUser = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -38,8 +39,6 @@ const getPresenceById = async (req, res) => {
       res.status(err.statusCode || 400).json({ status: "FAIL", message: err.message });
   }
 }
-
-
 
 const updatePresence = async (req, res) => {
   try {
@@ -65,7 +64,7 @@ const deletePresence = async (req, res) => {
 }
 
 module.exports = {
-  createPresence,
+  presence,
   getAllPresences,
   getPresenceById,
   updatePresence,

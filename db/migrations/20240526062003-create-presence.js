@@ -17,11 +17,18 @@ module.exports = {
         },
         onDelete: 'CASCADE'
       },
+      presenceDate: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
       checkIn: {
         type: Sequelize.DATE
       },
       checkOut: {
         type: Sequelize.DATE
+      },
+      overtime: {
+        type: Sequelize.INTEGER
       },
       status: {
         type: Sequelize.ENUM,

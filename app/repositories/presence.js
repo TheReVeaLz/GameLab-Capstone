@@ -1,14 +1,26 @@
-const { where } = require('sequelize');
 const { Presence, User } = require('../models');
 
-const createPresence = async (data) => {
-    return await Presence.create(data);
+async function create(body) {
+    return await Presence.create(body);
 }
 
 const getPresenceById = async (id) => {
     return await Presence.findByPk(id, {
         include: [User]
     });
+}
+
+/**
+* Filter the course with specific condition.
+* [filter] - Object to specifying the condition (Ex. { id: 1 })
+*/
+async function findOne(filter) {
+    if (typeof filter !== "object" && filter != null) return new Error('filter is not an object');
+    return await Presence.findOne({ where: filter, include: [User] });
+}
+
+async function update(payload) {
+    return await Presence.update(payload);
 }
 
 const getAllPresences = async () => {
@@ -23,7 +35,6 @@ const getAllPresencesUser = async (userId) => {
         include: [User]
     });
 }
-
 
 const updatePresence = async (id, data) => {
     const presence = await Presence.findByPk(id);
@@ -42,8 +53,10 @@ const deletePresence = async (id) => {
 }
 
 module.exports = {
-    createPresence,
+    create,
     getPresenceById,
+    findOne,
+    update,
     getAllPresences,
     updatePresence,
     deletePresence,
