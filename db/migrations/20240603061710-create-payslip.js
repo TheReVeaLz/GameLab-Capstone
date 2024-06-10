@@ -27,9 +27,6 @@ module.exports = {
       salary: {
         type: Sequelize.FLOAT
       },
-      allowances: {
-        type: Sequelize.FLOAT
-      },
       deductions: {
         type: Sequelize.FLOAT
       },

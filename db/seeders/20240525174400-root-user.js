@@ -17,6 +17,7 @@ module.exports = {
     const timestamp = new Date();
 
     await queryInterface.bulkInsert('Users', [{
+      id: 1,
       name,
       email: `${name.toLowerCase()}@gmail.com`,
       encryptedPassword: bcrypt.hashSync("root", 10),

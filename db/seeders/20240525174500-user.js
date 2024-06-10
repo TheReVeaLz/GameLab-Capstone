@@ -1,7 +1,7 @@
 'use strict';
 const { Op } = require("sequelize");
 const bcrypt = require("bcrypt");
-const names = require('./Seeds.json').names;
+const users = require('./Seeds.json').users;
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -19,9 +19,10 @@ module.exports = {
     const encryptedPassword = bcrypt.hashSync(password, 10);
     const timestamp = new Date();
 
-    const users = names.map((name) => ({
-      name,
-      email: `${name.toLowerCase()}@gmail.com`,
+    const data = users.map((user) => ({
+      id: user.id,
+      name: user.name,
+      email: `${user.name.toLowerCase()}@gmail.com`,
       encryptedPassword,
       phoneNumber: "082112345678",
       roleId: 1,
@@ -29,7 +30,7 @@ module.exports = {
       updatedAt: timestamp,
     }))
 
-    await queryInterface.bulkInsert('Users', users)
+    await queryInterface.bulkInsert('Users', data)
   },
 
   async down (queryInterface, Sequelize) {
@@ -39,6 +40,7 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('Users', { name: { [Op.in]: names } });
+    const data = users.map((user) => (user.name));
+    await queryInterface.bulkDelete('Users', { name: { [Op.in]: data } });
   }
 };

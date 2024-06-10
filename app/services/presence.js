@@ -1,6 +1,6 @@
 const presenceRepository = require('../repositories/presence');
 const ApplicationError = require('../../config/errors/ApplicationError');
-const Helper = require('../helper/helper');
+const Helper = require('../../middlewares/helper');
 
 const presence = async (data) => {
     try {
@@ -8,7 +8,7 @@ const presence = async (data) => {
         const today = new Date();
         
         // Assign the WIB time to the presenceDate and checkIn fields
-        data.presenceDate = Helper.Today();
+        data.presenceDate = Helper.DayLocal();
 
         // Get today presence
         const todayPresence = await presenceRepository.findOne({ userId: data.userId, presenceDate: data.presenceDate });
@@ -18,7 +18,7 @@ const presence = async (data) => {
                 throw new Error("Already presence today.");
 
             const payload = { checkOut: today };
-            const checkOutTime = Helper.Today(15);
+            const checkOutTime = Helper.DayLocal(15);
 
             if (todayPresence.status != "LATE" && today > checkOutTime)
                 payload.overtime = Helper.GetHoursDifference(today, checkOutTime)
