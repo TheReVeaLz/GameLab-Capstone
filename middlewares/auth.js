@@ -31,8 +31,8 @@ const authorize2 = async (req, res, next) => {
 }
 
 const isRoot = (req, res, next) => {
-    const { role } = req.user;
-    if (role !== "ROOT") {
+    const { privilege } = req.user;
+    if (privilege !== "ROOT") {
         res.status(403).json({
             status: "FAIL",
             message: "FORBIDDEN."
@@ -43,8 +43,8 @@ const isRoot = (req, res, next) => {
 }
 
 const isRootOrAdmin =  (req, res, next) => {
-    const { role } = req.user;
-    if (!(role === "ROOT" || role === "ADMIN")) {
+    const { privilege } = req.user;
+    if (!(privilege === "ROOT" || privilege === "ADMIN")) {
         res.status(403).json({
             status: "FAIL",
             message: "FORBIDDEN."

@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasMany(models.Presence, { foreignKey: 'userId' });
+      User.hasMany(models.Payslip, { foreignKey: 'userId' });
     }
   }
   User.init({
@@ -30,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     phoneNumber: DataTypes.STRING,
     image: DataTypes.STRING,
     address: DataTypes.STRING,
+    privilege: DataTypes.ENUM('ROOT', 'ADMIN', 'MEMBER')
   }, {
     sequelize,
     modelName: 'User',

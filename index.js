@@ -1,10 +1,9 @@
 const express = require('express');
 const app = express();
-const cors = require('cors')
-// const { router: productsRouter } = require('./routes/products');
-// const { router: usersRouter } = require('./routes/users');
-const adminRouter = require("./routes/v1/user.routes")
-const prenseceRouter = require("./routes/v1/presence.routes")
+const cors = require('cors');
+const adminRouter = require("./routes/v1/user.routes");
+const prenseceRouter = require("./routes/v1/presence.routes");
+const payslipRouter = require("./routes/v1/payslip.routes");
 
 const { User } = require("./app/models")
 
@@ -14,21 +13,13 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Endpoint root
-// app.get("/", (req, res) => {
-//   res.json({ message: "Ping successfully" });
-// });
-
-app.get("/", async (req, res) => {
-  res.json(await User.findAll());
+app.get("/", (req, res) => {
+  res.json({ message: "Ping successfully" });
 });
 
-app.use("/api/v1/user", adminRouter);
-app.use("/api/v1/user", prenseceRouter);
-
-// Menggunakan router untuk endpoint /products
-// app.use('/admin', productsRouter);
-// app.use('/user', usersRouter);
-// app.use('/transactions', transactionsRouter);
+app.use("/api/v1", adminRouter);
+app.use("/api/v1", prenseceRouter);
+app.use("/api/v1", payslipRouter);
 
 // Menjalankan server pada port 3000
 app.listen(3000, () => {

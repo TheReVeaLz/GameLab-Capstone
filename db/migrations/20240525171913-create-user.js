@@ -30,6 +30,11 @@ module.exports = {
       address: {
         type: Sequelize.STRING
       },
+      privilege: {
+        type: Sequelize.ENUM('ROOT', 'ADMIN', 'MEMBER'),
+        allowNull: false,
+        defaultValue: 'MEMBER'
+      },
       roleId: {
           type: Sequelize.INTEGER,
           references: {
