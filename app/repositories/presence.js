@@ -1,4 +1,4 @@
-const { Presence, User } = require('../models');
+const { Presence, User, JobRole } = require('../models');
 
 async function create(body) {
     return await Presence.create(body);
@@ -7,6 +7,23 @@ async function create(body) {
 const getPresenceById = async (id) => {
     return await Presence.findByPk(id, {
         include: [User]
+    });
+}
+
+/**
+* Filter the course with specific condition.
+* [filter] - Object to specifying the condition (Ex. { id: 1 })
+*/
+async function findAll(filter) {
+    if (typeof filter !== "object" && filter != null) return new Error('filter is not an object');
+    return await Presence.findAll({
+        where: filter,
+        include: [
+            {
+                model: User,
+                include: [JobRole]
+            }
+        ]
     });
 }
 
@@ -55,6 +72,7 @@ const deletePresence = async (id) => {
 module.exports = {
     create,
     getPresenceById,
+    findAll,
     findOne,
     update,
     getAllPresences,

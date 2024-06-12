@@ -18,7 +18,9 @@ module.exports = (sequelize, DataTypes) => {
   JobRole.init({
     order: DataTypes.INTEGER,
     roleName: DataTypes.STRING,
-    salary: DataTypes.FLOAT
+    salary: DataTypes.FLOAT,
+    overtimeBonus: DataTypes.FLOAT,
+    absenceDeduction: DataTypes.FLOAT
   }, {
     sequelize,
     modelName: 'JobRole',

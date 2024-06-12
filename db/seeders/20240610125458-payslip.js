@@ -29,14 +29,16 @@ module.exports = {
         periodEnd.setHours(0, 0, 0);
 
         const salary = roles[2].salary;
-        const deductions = Math.floor(Math.random() * 5) * 1e5;
+        const deduction = Math.floor(Math.random() * 5) * 1e5;
+        const overtimeBonus = Math.floor(Math.random() * 5) * 5e4;
         data.push({
           userId: users[j].id,
           periodStart,
           periodEnd,
           salary,
-          deductions,
-          netWorth: salary - deductions,
+          overtimeBonus,
+          deduction,
+          netWorth: salary - deduction + overtimeBonus,
           createdAt: timestamp,
           updatedAt: timestamp
         });

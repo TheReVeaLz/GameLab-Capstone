@@ -18,6 +18,12 @@ module.exports = {
       salary: {
         type: Sequelize.FLOAT
       },
+      overtimeBonus: {
+        type: Sequelize.FLOAT
+      },
+      absenceDeduction: {
+        type: Sequelize.FLOAT
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

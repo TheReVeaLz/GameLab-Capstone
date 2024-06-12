@@ -1,4 +1,5 @@
-const { Payslip, User } = require("../models/index.js");
+const { JobRole } = require("../models/index.js");
+const { Op } = require('sequelize');
 
 /**
 * Filter the course with specific condition.
@@ -6,15 +7,16 @@ const { Payslip, User } = require("../models/index.js");
 */
 async function findAll(filter) {
     if (typeof filter !== "object" && filter != null) return new Error('filter is not an object');
-    return await Payslip.findAll({ where: filter, include: User });
+    return await JobRole.findAll({ where: {
+        ...filter,
+        order: {
+            [Op.not]: 0
+        }
+    } });
 }
 
 async function create(body) {
-    return await Payslip.create(body);
-}
-
-async function bulkCreate(body) {
-    return await Payslip.bulkCreate(body);
+    return await JobRole.create(body);
 }
 
 /**
@@ -23,21 +25,20 @@ async function bulkCreate(body) {
 */
 async function findOne(filter) {
     if (typeof filter !== "object" && filter != null) return new Error('filter is not an object');
-    return await Payslip.findOne({ where: filter });
+    return await JobRole.findOne({ where: filter });
 }
 
 async function update(payload) {
-    return await Payslip.update(payload);
+    return await JobRole.update(payload);
 }
 
 async function findByPk(id) {
-    return await Payslip.findByPk(id);
+    return await JobRole.findByPk(id);
 }
 
 module.exports = {
     findAll,
     create,
-    bulkCreate,
     findOne,
     findByPk,
     update

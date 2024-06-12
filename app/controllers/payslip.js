@@ -28,6 +28,17 @@ const getUsers = async (req, res) => {
 	}
 }
 
+const generatePayslips = async (req, res) => {
+	try {
+		const payslips = await payslipService.generatePayslips(req.body);
+
+		res.json({ status: "OK", message: "Payslips generated successfully.", data: payslips });
+	} catch (err) {
+		res.status(err.statusCode || 400).json({ status: "FAIL", message: err.message });
+	}
+}
+// Admin
+
 const getUserPayslip = async (req, res) => {
 	try {
 		const userId = req.user?.id ? req.user.id : req.params?.id;
@@ -37,7 +48,6 @@ const getUserPayslip = async (req, res) => {
 		res.status(err.statusCode || 400).json({ status: "FAIL", message: err.message });
 	}
 }
-// Admin
 
 const findOne = async (req, res) => {
 	try {
@@ -56,4 +66,5 @@ module.exports = {
 	getUsers,
 	getUserPayslip,
 	findOne,
+	generatePayslips
 }

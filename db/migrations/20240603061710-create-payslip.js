@@ -27,7 +27,10 @@ module.exports = {
       salary: {
         type: Sequelize.FLOAT
       },
-      deductions: {
+      overtimeBonus: {
+        type: Sequelize.FLOAT
+      },
+      deduction: {
         type: Sequelize.FLOAT
       },
       netWorth: {

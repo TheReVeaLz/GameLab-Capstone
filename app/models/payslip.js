@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     periodStart: DataTypes.DATE,
     periodEnd: DataTypes.DATE,
     salary: DataTypes.FLOAT,
-    deductions: DataTypes.FLOAT,
+    overtimeBonus: DataTypes.FLOAT,
+    deduction: DataTypes.FLOAT,
     netWorth: DataTypes.FLOAT
   }, {
     sequelize,
