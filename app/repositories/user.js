@@ -1,8 +1,15 @@
-const { User } = require("../models/index.js");
+const { User, JobRole } = require("../models/index.js");
 const bcrypt = require("bcrypt");
 
+const genericInclude = {
+    model: JobRole,
+    attributes: [
+        "roleName", "salary"
+    ]
+};
+
 async function findAll() {
-    return await User.findAll({ attributes: { exclude: ["encryptedPassword", "otp", "otpExpiredAt", "verified"] } });
+    return await User.findAll({ include: [ genericInclude ], attributes: { exclude: ["encryptedPassword"] } });
 }
 
 async function create(body) {
@@ -15,7 +22,9 @@ async function create(body) {
 */
 async function findOne(filter) {
     if (typeof filter !== "object" && filter != null) return new Error('filter is not an object');
-    return await User.findOne({ where: filter });
+    return await User.findOne({ where: filter, 
+        include: [ genericInclude ]
+    });
 }
 
 async function checkPassword(password, hash) {

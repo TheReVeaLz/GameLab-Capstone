@@ -13,10 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasMany(models.Presence, { foreignKey: 'userId' });
       User.hasMany(models.Payslip, { foreignKey: 'userId' });
+      User.belongsTo(models.JobRole, { foreignKey: 'roleId' });
       User.hasMany(models.Notification, { 
         foreignKey: 'userId',
            as: 'notifications'
-      })
+      });
     }
   }
   User.init({
@@ -35,7 +36,8 @@ module.exports = (sequelize, DataTypes) => {
     phoneNumber: DataTypes.STRING,
     image: DataTypes.STRING,
     address: DataTypes.STRING,
-    privilege: DataTypes.ENUM('ROOT', 'ADMIN', 'MEMBER')
+    privilege: DataTypes.ENUM('ROOT', 'ADMIN', 'MEMBER'),
+    roleId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'User',

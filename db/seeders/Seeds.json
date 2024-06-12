@@ -27,19 +27,25 @@
             "id": 1,
             "order": 0,
             "roleName": "OWNER",
-            "salary": 2e7
+            "salary": 2e7,
+            "overtimeBonus": 75e3,
+            "absenceDeduction": 25e4
         },
         {
             "id": 2,
             "order": 1,
             "roleName": "ADMIN",
-            "salary": 9e6
+            "salary": 9e6,
+            "overtimeBonus": 5e4,
+            "absenceDeduction": 1e5
         },
         {
             "id": 3,
             "order": 2,
             "roleName": "KARYAWAN",
-            "salary": 7e6
+            "salary": 7e6,
+            "overtimeBonus": 25e3,
+            "absenceDeduction": 1e5
         }
     ]
 }

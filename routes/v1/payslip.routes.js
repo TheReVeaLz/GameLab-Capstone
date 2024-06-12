@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get('/admin/payslips', AuthMiddleware.authorize, AuthMiddleware.isRootOrAdmin, payslipController.getUsers);
 router.get('/admin/payslips/:id', AuthMiddleware.authorize, AuthMiddleware.isRootOrAdmin, payslipController.getUserPayslip);
+router.post('/admin/payslips/generate', AuthMiddleware.authorize, AuthMiddleware.isRootOrAdmin, payslipController.generatePayslips);
 router.get('/user/payslips', AuthMiddleware.authorize, payslipController.getUserPayslip);
 // router.get('/user/payslips:id', AuthMiddleware.authorize, payslipController.findAll);
 
