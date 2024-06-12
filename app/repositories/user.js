@@ -31,9 +31,9 @@ async function findByPk(id) {
     return await User.findByPk(id);
 }
 
-// async function notification(id) {
-//     return await User.findByPk(id, { include: [{ model: Notification,as: 'notifications' ,attributes: {exclude: ['userId','updatedAt']} }], attributes: { exclude: ["id","updatedAt","createdAt", "encryptedPassword", "phoneNumber", "address", "verified"] }});
-// }
+async function notification(id) {
+    return await User.findByPk(id, { include: ["notifications"],attributes: ['id', 'name'] });
+}
 
 module.exports = {
     findAll,
@@ -41,6 +41,6 @@ module.exports = {
     findOne,
     checkPassword,
     findByPk,
-    // notification,
+    notification,
     update
 }

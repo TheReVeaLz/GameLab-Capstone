@@ -1,5 +1,6 @@
 const presenceRepository = require('../repositories/presence');
 const ApplicationError = require('../../config/errors/ApplicationError');
+const notificationService = require('../services/notification');
 const Helper = require('../../middlewares/helper');
 
 const presence = async (data) => {
@@ -38,7 +39,8 @@ const presence = async (data) => {
         } else {
             data.status = 'ONTIME';
         }
-        
+          // Create notification for check-in
+          await notificationService.create(data.userId, { title: 'Check-In', message: 'You have checked in successfully.' });
         // Save the presence data
         return await presenceRepository.create(data);
     } catch (err) {
@@ -82,6 +84,8 @@ const updatePresence = async (id, data) => {
         
         // Assign the WIB time to the checkOut field
         data.checkOut = today;
+         // Create notification for updating presence
+         await notificationService.create(data.userId, { title: 'Update Presence', message: 'Your presence record has been updated.' });
         
         // Update the presence data
         return await presenceRepository.updatePresence(id, data);

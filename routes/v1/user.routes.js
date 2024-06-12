@@ -28,4 +28,7 @@ router.get('/user/users', AuthMiddleware.authorize, AuthMiddleware.isRootOrAdmin
 // get current user
 router.post('/user/current-user', AuthMiddleware.authorize, Auth.currentUser)
 
+// get user notification
+router.get('/notifications', AuthMiddleware.authorize, Auth.notification )
+
 module.exports = router
