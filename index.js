@@ -4,6 +4,8 @@ const cors = require('cors');
 const adminRouter = require("./routes/v1/user.routes");
 const prenseceRouter = require("./routes/v1/presence.routes");
 const payslipRouter = require("./routes/v1/payslip.routes");
+const swaggerUi = require('swagger-ui-express')
+const swaggerDocument = require('./DOCS/openapi.json')
 
 const { User } = require("./app/models")
 
@@ -20,6 +22,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1", adminRouter);
 app.use("/api/v1", prenseceRouter);
 app.use("/api/v1", payslipRouter);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 // Menjalankan server pada port 3000
 app.listen(3000, () => {
