@@ -1,9 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const adminRouter = require("./routes/v1/user.routes");
-const prenseceRouter = require("./routes/v1/presence.routes");
-const payslipRouter = require("./routes/v1/payslip.routes");
+const apiV1 = require("./routes/v1");
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./DOCS/openapi.json')
 
@@ -19,10 +17,8 @@ app.get("/", (req, res) => {
   res.json({ message: "Ping successfully" });
 });
 
-app.use("/api/v1", adminRouter);
-app.use("/api/v1", prenseceRouter);
-app.use("/api/v1", payslipRouter);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+app.use("/api/v1", apiV1);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Menjalankan server pada port 3000
 app.listen(3000, () => {
