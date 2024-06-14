@@ -10,11 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-        Presence.belongsTo(models.User, { foreignKey: 'userId' });
+        Presence.belongsTo(models.User, { foreignKey: 'userId', onDelete: "CASCADE" });
     }
   }
   Presence.init({
-    userId: DataTypes.INTEGER,
     presenceDate: DataTypes.DATE,
     checkIn: DataTypes.DATE,
     checkOut: DataTypes.DATE,

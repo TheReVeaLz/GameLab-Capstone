@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Payslip.belongsTo(models.User, { foreignKey: 'userId' });
+      Payslip.belongsTo(models.User, { foreignKey: 'userId', onDelete: "CASCADE" });
     }
   }
   Payslip.init({

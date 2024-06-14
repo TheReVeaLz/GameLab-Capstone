@@ -14,10 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Presence, { foreignKey: 'userId' });
       User.hasMany(models.Payslip, { foreignKey: 'userId' });
       User.belongsTo(models.JobRole, { foreignKey: 'roleId' });
-      User.hasMany(models.Notification, { 
-        foreignKey: 'userId',
-           as: 'notifications'
-      });
+      User.hasMany(models.Notification, { foreignKey: 'userId' });
+      User.hasMany(models.LeaveRequest, { foreignKey: 'userId' });
     }
   }
   User.init({

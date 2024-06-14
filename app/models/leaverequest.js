@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      LeaveRequest.belongsTo(models.User, { foreignKey: 'userId', onDelete: 'CASCADE' });
     }
   }
   LeaveRequest.init({
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     endDate: DataTypes.DATE,
     status: {
       type: DataTypes.ENUM,
-      values: ['LATE', 'ONTIME', 'LEAVE']
+      values: ['PENDING', 'ACCEPTED', 'REJECTED']
     },
   }, {
     sequelize,

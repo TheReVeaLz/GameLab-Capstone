@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       JobRole.hasMany(models.User, {
-        foreignKey: 'id'
+        foreignKey: 'roleId',
+        onDelete: "CASCADE"
       })
     }
   }

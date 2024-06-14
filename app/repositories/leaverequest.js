@@ -1,7 +1,19 @@
-const { LeaveRequest } = require("../models/index.js");
+const { LeaveRequest, User } = require("../models/index.js");
 
-async function findAll() {
-    return await LeaveRequest.findAll();
+const genericInclude = {
+    model: User,
+    attributes: [
+        "name", "email"
+    ]
+};
+
+/**
+* Filter the course with specific condition.
+* [filter] - Object to specifying the condition (Ex. { id: 1 })
+*/
+async function findAll(filter) {
+    if (typeof filter !== "object" && filter != null) return new Error('filter is not an object');
+    return await LeaveRequest.findAll({ where: filter, include: genericInclude });
 }
 
 async function create(body) {
@@ -14,7 +26,7 @@ async function create(body) {
 */
 async function findOne(filter) {
     if (typeof filter !== "object" && filter != null) return new Error('filter is not an object');
-    return await LeaveRequest.findOne({ where: filter });
+    return await LeaveRequest.findOne({ where: filter, include: genericInclude  });
 }
 
 async function update(payload) {
