@@ -23,39 +23,39 @@
       "description": "Operations about your user"
     },
     {
+      "name": "admin",
+      "description": "Operations about your admin"
+    },
+    {
+      "name": "super admin",
+      "description": "Operations about your super admin"
+    },
+    {
       "name": "otp",
       "description": "Operations about your Otp"
     },
     {
-      "name": "order",
-      "description": "Operations about your order"
+      "name": "presence",
+      "description": "Operations about your Presence"
     },
     {
-      "name": "course",
-      "description": "Operations about your Course"
-    },
-    {
-      "name": "chapter",
-      "description": "Operations about your Chapter"
-    },
-    {
-      "name": "module",
+      "name": "payslips",
       "description": "Operations about your module"
     }
   ],
   "paths": {
-    "/api/v1/orders": {
+    "/api/v1/user/presence": {
       "get": {
         "tags": [
-          "order"
+          "presence"
         ],
-        "summary": "All payments",
+        "summary": "Get all presences",
         "security": [
           {
             "api_key": []
           }
         ],
-        "description": "make an order to buy a course",
+        "description": "create a display of the entire presence",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -64,149 +64,53 @@
                 "example": {
                   "status": "OK",
                   "message": "Success",
-                  "data": {
-                    "id": "15250d2c-0419-4004-ae8a-8437b3af1fb0",
-                    "userId": "8ae3a322-ecdd-4752-b1c7-603c064bb952",
-                    "courseId": "0c06de8f-ea83-49d6-9447-a4247e5cd4ec",
-                    "status": "COMPLETED",
-                    "paymentMethod": "Bank Transfer",
-                    "expiredDateAt": "2023-12-14T05:50:58.764Z",
-                    "cardNumber": null,
-                    "cardHolderName": null,
-                    "cvv": null,
-                    "expiryDate": null,
-                    "Course": {
-                      "id": "0c06de8f-ea83-49d6-9447-a4247e5cd4ec",
-                      "title": "Learn Basic Javascript",
-                      "category": "Android Development",
-                      "level": "advance",
-                      "price": 217214
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "201": {
-            "description": "Successful response - Credit Card",
-            "content": {
-              "application/json": {
-                "example": {
-                  "status": "OK",
-                  "message": "Success",
-                  "data": {
-                    "id": "45230e6a-9b6f-4c06-aa62-42fc57507c94",
-                    "userId": "8ae3a322-ecdd-4752-b1c7-603c064bb952",
-                    "courseId": "0c06de8f-ea83-49d6-9447-a4247e5cd4ec",
-                    "status": "COMPLETED",
-                    "paymentMethod": "Credit Card",
-                    "expiredDateAt": "2023-12-14T05:50:58.764Z",
-                    "cardNumber": "**** **** **** 1234",
-                    "cardHolderName": "John Doe",
-                    "cvv": "123",
-                    "expiryDate": "12/2025",
-                    "createdAt": "2023-12-14T04:50:58.764Z",
-                    "updatedAt": "2023-12-14T04:51:53.965Z",
-                    "Course": {
-                      "id": "0c06de8f-ea83-49d6-9447-a4247e5cd4ec",
-                      "title": "Learn Basic Javascript",
-                      "category": "Android Development",
-                      "level": "advance",
-                      "price": 217214
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
+                  "data": [
                     {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Unauthorized"
-                        }
+                      "id": 1,
+                      "userId": 1,
+                      "presenceDate": "2024-06-12T17:00:00.000Z",
+                      "checkIn": "2024-06-13T16:02:25.000Z",
+                      "checkOut": null,
+                      "overtime": null,
+                      "status": "LATE",
+                      "createdAt": "2024-06-13T16:02:25.000Z",
+                      "updatedAt": "2024-06-13T16:02:25.000Z",
+                      "User": {
+                        "id": 1,
+                        "name": "root",
+                        "email": "root@gmail.com",
+                        "encryptedPassword": "$2b$10$XfgiOba1Wff93hHSFN7S1ewj5Zsx8T70Ox6baED5E/tvs9R8K0f06",
+                        "phoneNumber": "082112345678",
+                        "image": "https://res.cloudinary.com/djsjnrfv0/image/upload/v1702988069/BINAR/mqtkzduziqwhdvxu1vzh.png",
+                        "address": null,
+                        "privilege": "ROOT",
+                        "roleId": 1,
+                        "createdAt": "2024-06-13T15:55:07.000Z",
+                        "updatedAt": "2024-06-13T15:55:07.000Z"
                       }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
                     },
                     {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "No order has been placed"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/orders/list": {
-      "get": {
-        "tags": [
-          "order"
-        ],
-        "summary": "List of all orders",
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "description": "Retrieve a list of all orders in the system.",
-        "responses": {
-          "200": {
-            "description": "List of Module",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/OK"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "oneOf": [
-                              {
-                                "$ref": "#/components/schemas/OKOrderCreditCard"
-                              },
-                              {
-                                "$ref": "#/components/schemas/OKOrderBankTransfer"
-                              },
-                              {
-                                "$ref": "#/components/schemas/OKOrderCANCELED"
-                              }
-                            ]
-                          }
-                        }
+                      "id": 2,
+                      "userId": 1,
+                      "presenceDate": "2024-06-13T17:00:00.000Z",
+                      "checkIn": "2024-06-13T23:33:35.000Z",
+                      "checkOut": null,
+                      "overtime": null,
+                      "status": "ONTIME",
+                      "createdAt": "2024-06-13T23:33:35.000Z",
+                      "updatedAt": "2024-06-13T23:33:35.000Z",
+                      "User": {
+                        "id": 1,
+                        "name": "root",
+                        "email": "root@gmail.com",
+                        "encryptedPassword": "$2b$10$XfgiOba1Wff93hHSFN7S1ewj5Zsx8T70Ox6baED5E/tvs9R8K0f06",
+                        "phoneNumber": "082112345678",
+                        "image": "https://res.cloudinary.com/djsjnrfv0/image/upload/v1702988069/BINAR/mqtkzduziqwhdvxu1vzh.png",
+                        "address": null,
+                        "privilege": "ROOT",
+                        "roleId": 1,
+                        "createdAt": "2024-06-13T15:55:07.000Z",
+                        "updatedAt": "2024-06-13T15:55:07.000Z"
                       }
                     }
                   ]
@@ -249,141 +153,7 @@
                       "type": "object",
                       "properties": {
                         "message": {
-                          "example": "there is no order list"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/orders/{id}": {
-      "get": {
-        "tags": [
-          "order"
-        ],
-        "summary": "Get detaisl orders",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "example": "0c06de8f-ea83-49d6-9447-a4247e5cd4ec"
-            },
-            "required": true
-          }
-        ],
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "description": "Retrieve details of a specific order",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "example": {
-                  "status": "OK",
-                  "message": "Success",
-                  "data": {
-                    "id": "15250d2c-0419-4004-ae8a-8437b3af1fb0",
-                    "userId": "8ae3a322-ecdd-4752-b1c7-603c064bb952",
-                    "courseId": "0c06de8f-ea83-49d6-9447-a4247e5cd4ec",
-                    "status": "COMPLETED",
-                    "paymentMethod": "Bank Transfer",
-                    "expiredDateAt": "2023-12-14T05:50:58.764Z",
-                    "cardNumber": null,
-                    "cardHolderName": null,
-                    "cvv": null,
-                    "expiryDate": null,
-                    "Course": {
-                      "id": "0c06de8f-ea83-49d6-9447-a4247e5cd4ec",
-                      "title": "Learn Basic Javascript",
-                      "category": "Android Development",
-                      "level": "advance",
-                      "price": 217214
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "201": {
-            "description": "Successful response - Credit Card",
-            "content": {
-              "application/json": {
-                "example": {
-                  "status": "OK",
-                  "message": "Success",
-                  "data": {
-                    "id": "45230e6a-9b6f-4c06-aa62-42fc57507c94",
-                    "userId": "8ae3a322-ecdd-4752-b1c7-603c064bb952",
-                    "courseId": "0c06de8f-ea83-49d6-9447-a4247e5cd4ec",
-                    "status": "COMPLETED",
-                    "paymentMethod": "Credit Card",
-                    "expiredDateAt": "2023-12-14T05:50:58.764Z",
-                    "cardNumber": "**** **** **** 1234",
-                    "cardHolderName": "John Doe",
-                    "cvv": "123",
-                    "expiryDate": "12/2025",
-                    "createdAt": "2023-12-14T04:50:58.764Z",
-                    "updatedAt": "2023-12-14T04:51:53.965Z",
-                    "Course": {
-                      "id": "0c06de8f-ea83-49d6-9447-a4247e5cd4ec",
-                      "title": "Learn Basic Javascript",
-                      "category": "Android Development",
-                      "level": "advance",
-                      "price": 217214
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Unauthorized"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "No order has been placed"
+                          "example": "Failed to get presence."
                         }
                       }
                     }
@@ -396,53 +166,47 @@
       },
       "post": {
         "tags": [
-          "order"
+          "presence"
         ],
-        "summary": "Create a new order by ID",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "example": "0c06de8f-ea83-49d6-9447-a4247e5cd4ec"
-            },
-            "required": true
-          }
-        ],
+        "summary": "Create a new presence record",
         "security": [
           {
             "api_key": []
           }
         ],
-        "description": "Create a new order with the provided ID.",
+        "description": "Create a new presence record with the provided details.",
         "responses": {
           "201": {
-            "description": "Order created successfully.",
+            "description": "Presence created successfully.",
             "content": {
               "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/OK"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "oneOf": [
-                              {
-                                "$ref": "#/components/schemas/OrderDetails"
-                              }
-                            ]
-                          }
-                        }
-                      }
+                "example": {
+                  "status": "OK",
+                  "message": "Presence data was created successfully.",
+                  "data": {
+                    "id": 2,
+                    "userId": 1,
+                    "presenceDate": "2024-06-13T17:00:00.000Z",
+                    "checkIn": "2024-06-13T23:33:35.000Z",
+                    "checkOut": "2024-06-13T23:53:50.806Z",
+                    "overtime": null,
+                    "status": "ONTIME",
+                    "createdAt": "2024-06-13T23:33:35.000Z",
+                    "updatedAt": "2024-06-13T23:53:50.811Z",
+                    "User": {
+                      "id": 1,
+                      "name": "root",
+                      "email": "root@gmail.com",
+                      "encryptedPassword": "$2b$10$XfgiOba1Wff93hHSFN7S1ewj5Zsx8T70Ox6baED5E/tvs9R8K0f06",
+                      "phoneNumber": "082112345678",
+                      "image": "https://res.cloudinary.com/djsjnrfv0/image/upload/v1702988069/BINAR/mqtkzduziqwhdvxu1vzh.png",
+                      "address": null,
+                      "privilege": "ROOT",
+                      "roleId": 1,
+                      "createdAt": "2024-06-13T15:55:07.000Z",
+                      "updatedAt": "2024-06-13T15:55:07.000Z"
                     }
-                  ]
+                  }
                 }
               }
             }
@@ -460,7 +224,7 @@
                       "type": "object",
                       "properties": {
                         "message": {
-                          "example": "You have already purchased this course"
+                          "example": "Required parameters are missing"
                         }
                       }
                     }
@@ -504,7 +268,7 @@
                       "type": "object",
                       "properties": {
                         "message": {
-                          "example": "Failed create order"
+                          "example": "Failed to create presence"
                         }
                       }
                     }
@@ -514,13 +278,104 @@
             }
           }
         }
+      }
+    },
+    "/api/v1/user/presence/{id}": {
+      "get": {
+        "tags": [
+          "presence"
+        ],
+        "summary": "Get detaisl Presence",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "integer",
+              "example": "1"
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Retrieve details of a specific presence record",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "OK",
+                  "message": "Success",
+                  "data": {
+                    "id": 1,
+                    "userId": 1,
+                    "presenceDate": "2024-06-12T17:00:00.000Z",
+                    "checkIn": "2024-06-13T16:02:25.000Z",
+                    "checkOut": null,
+                    "overtime": null,
+                    "status": "LATE",
+                    "createdAt": "2024-06-13T16:02:25.000Z",
+                    "updatedAt": "2024-06-13T16:02:25.000Z",
+                    "User": {
+                      "id": 1,
+                      "name": "root",
+                      "email": "root@gmail.com",
+                      "encryptedPassword": "$2b$10$XfgiOba1Wff93hHSFN7S1ewj5Zsx8T70Ox6baED5E/tvs9R8K0f06",
+                      "phoneNumber": "082112345678",
+                      "image": "https://res.cloudinary.com/djsjnrfv0/image/upload/v1702988069/BINAR/mqtkzduziqwhdvxu1vzh.png",
+                      "address": null,
+                      "privilege": "ROOT",
+                      "roleId": 1,
+                      "createdAt": "2024-06-13T15:55:07.000Z",
+                      "updatedAt": "2024-06-13T15:55:07.000Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FAIL"
+                },
+                "example": {
+                  "status": "FAIL",
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FAIL"
+                },
+                "example": {
+                  "status": "FAIL",
+                  "message": "Internal Server Error"
+                }
+              }
+            }
+          }
+        }
       },
       "put": {
         "tags": [
-          "order"
+          "presence"
         ],
-        "summary": "Update and Process Payment for Course Orders by ID",
-        "description": "Update order details and process payment for the specified order ID.",
+        "summary": "Update Presence Details by ID",
+        "description": "Update presence details for the specified presence ID.",
         "security": [
           {
             "api_key": []
@@ -532,62 +387,37 @@
             "name": "id",
             "schema": {
               "type": "string",
-              "format": "uuid",
-              "example": "b5d70188-6b85-4d98-a975-509a80710671"
+              "format": "integer",
+              "example": "1"
             },
             "required": true
           }
         ],
-        "requestBody": {
-          "description": "Request body for updating an order and processing payment",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/OrderCreditCard"
-                  },
-                  {
-                    "$ref": "#/components/schemas/OrderBankTransfer"
-                  }
-                ]
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
-            "description": "payment successful",
+            "description": "Presence updated successfully.",
             "content": {
               "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/OK"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "oneOf": [
-                              {
-                                "$ref": "#/components/schemas/OKOrderCreditCard"
-                              }
-                            ]
-                          }
-                        }
-                      }
-                    }
-                  ]
+                "example": {
+                  "status": "OK",
+                  "message": "Presence data was updated successfully.",
+                  "data": {
+                    "id": 2,
+                    "userId": 1,
+                    "presenceDate": "2024-06-13T17:00:00.000Z",
+                    "checkIn": "2024-06-13T23:33:35.000Z",
+                    "checkOut": "2024-06-14T06:57:19.286Z",
+                    "overtime": null,
+                    "status": "ONTIME",
+                    "createdAt": "2024-06-13T23:33:35.000Z",
+                    "updatedAt": "2024-06-13T23:57:19.324Z"
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "It was not possible to make a payment because the payment date had expired",
+            "description": "Bad Request. The request is malformed or missing required parameters.",
             "content": {
               "application/json": {
                 "schema": {
@@ -599,7 +429,7 @@
                       "type": "object",
                       "properties": {
                         "message": {
-                          "example": "Failed to process credit card payment: Order expired and canceled"
+                          "example": "Failed to update presence. Presence not found"
                         }
                       }
                     }
@@ -609,7 +439,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized. Internal Server Error.",
+            "description": "Unauthorized. Invalid or missing API key.",
             "content": {
               "application/json": {
                 "schema": {
@@ -631,7 +461,7 @@
             }
           },
           "500": {
-            "description": "Internal Server Error. Order has already been paid.",
+            "description": "Internal Server Error. Something went wrong on the server.",
             "content": {
               "application/json": {
                 "schema": {
@@ -643,7 +473,7 @@
                       "type": "object",
                       "properties": {
                         "message": {
-                          "example": "Failed to payment order: Order has already been paid"
+                          "example": "Internal Server Error"
                         }
                       }
                     }
@@ -656,10 +486,10 @@
       },
       "delete": {
         "tags": [
-          "order"
+          "presence"
         ],
-        "summary": "Delete order by ID",
-        "description": "Delete the order with the specified ID.",
+        "summary": "Delete presence by ID",
+        "description": "Delete the presence record with the specified ID.",
         "security": [
           {
             "api_key": []
@@ -671,27 +501,54 @@
             "name": "id",
             "schema": {
               "type": "string",
-              "format": "uuid",
-              "example": "b5d70188-6b85-4d98-a975-509a80710671"
+              "format": "integer",
+              "example": "1"
             },
             "required": true
           }
         ],
         "responses": {
           "200": {
-            "description": "successful to delete the order",
+            "description": "Presence deleted successfully.",
             "content": {
               "application/json": {
                 "schema": {
                   "allOf": [
                     {
-                      "$ref": "#/components/schemas/Deleted"
+                      "$ref": "#/components/schemas/OK"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "OK"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Presence data was Deleted successfully."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request. The request is malformed or missing required parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/FAIL"
                     },
                     {
                       "type": "object",
                       "properties": {
                         "message": {
-                          "example": "Order deleted successfully"
+                          "example": "Failed to delete presence. Presence not found"
                         }
                       }
                     }
@@ -713,7 +570,7 @@
                       "type": "object",
                       "properties": {
                         "message": {
-                          "example": "Failed to delete order: Order not found."
+                          "example": "Internal Server Error"
                         }
                       }
                     }
@@ -1081,17 +938,22 @@
         }
       }
     },
-    "/api/v1/modules": {
+    "/api/v1/user/payslips": {
       "get": {
         "tags": [
-          "module"
+          "payslips"
         ],
-        "summary": "Get module",
-        "description": "Retrieve a list of modules",
-        "operationId": "getModules",
+        "summary": "Get user payslips",
+        "description": "Retrieve a list of payslips for the user",
+        "operationId": "getUserPayslips",
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
         "responses": {
           "200": {
-            "description": "List of Module",
+            "description": "List of user payslips",
             "content": {
               "application/json": {
                 "schema": {
@@ -1122,6 +984,28 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized. Invalid or missing API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/FAIL"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "example": "Unauthorized"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
           "500": {
             "description": "Internal Server Error",
             "content": {
@@ -1135,7 +1019,7 @@
                       "type": "object",
                       "properties": {
                         "message": {
-                          "example": "Failed to retrieve the list of Modules"
+                          "example": "Internal Server Error"
                         }
                       }
                     }
@@ -1147,10 +1031,288 @@
         }
       }
     },
-    "/api/v1/chapters/{id}/": {
+    "/api/v1/admin/payslips": {
+      "get": {
+        "tags": [
+          "payslips"
+        ],
+        "summary": "Get admin payslips",
+        "description": "Retrieve a list of payslips for the admin",
+        "operationId": "getAdminPayslips",
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User list"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 2
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "Johnny"
+                          },
+                          "email": {
+                            "type": "string",
+                            "example": "johnny@gmail.com"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "email"
+                        ]
+                      },
+                      "example": [
+                        {
+                          "id": 2,
+                          "name": "Johnny",
+                          "email": "johnny@gmail.com"
+                        },
+                        {
+                          "id": 3,
+                          "name": "Fikri",
+                          "email": "fikri@gmail.com"
+                        },
+                        {
+                          "id": 4,
+                          "name": "Brian",
+                          "email": "brian@gmail.com"
+                        },
+                        {
+                          "id": 5,
+                          "name": "Ranggawarsita",
+                          "email": "ranggawarsita@gmail.com"
+                        },
+                        {
+                          "id": 6,
+                          "name": "Jayabaya",
+                          "email": "jayabaya@gmail.com"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Invalid or missing API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/FAIL"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "example": "Unauthorized"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/FAIL"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "example": "Internal Server Error"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/payslips/{id}": {
+      "get": {
+        "tags": [
+          "payslips"
+        ],
+        "summary": "Get admin payslip by ID",
+        "description": "Retrieve a specific admin payslip by ID",
+        "operationId": "getAdminPayslipById",
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "integer",
+              "example": "1"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User list"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 2
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "Johnny"
+                          },
+                          "email": {
+                            "type": "string",
+                            "example": "johnny@gmail.com"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "email"
+                        ]
+                      },
+                      "example": [
+                        {
+                          "id": 2,
+                          "name": "Johnny",
+                          "email": "johnny@gmail.com"
+                        },
+                        {
+                          "id": 3,
+                          "name": "Fikri",
+                          "email": "fikri@gmail.com"
+                        },
+                        {
+                          "id": 4,
+                          "name": "Brian",
+                          "email": "brian@gmail.com"
+                        },
+                        {
+                          "id": 5,
+                          "name": "Ranggawarsita",
+                          "email": "ranggawarsita@gmail.com"
+                        },
+                        {
+                          "id": 6,
+                          "name": "Jayabaya",
+                          "email": "jayabaya@gmail.com"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Invalid or missing API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/FAIL"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "example": "Unauthorized"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/FAIL"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "example": "Internal Server Error"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/payslips/generate": {
       "post": {
         "tags": [
-          "module"
+          "payslips"
         ],
         "summary": "Create module",
         "security": [
@@ -1160,26 +1322,29 @@
         ],
         "description": "create a module using the chapter ID",
         "operationId": "createModuleInChapter",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "example": "82087470-5913-4137-bb57-a889d9b3030e"
-            },
-            "required": true,
-            "description": "ID of the chapter in which the module will be created"
-          }
-        ],
         "requestBody": {
-          "description": "Module object to be created",
+          "description": "Object containing the period start and end dates",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Module"
+                "type": "object",
+                "properties": {
+                  "periodStart": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-06-01T00:00:00Z"
+                  },
+                  "periodEnd": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-06-30T23:59:59Z"
+                  }
+                },
+                "required": [
+                  "periodStart",
+                  "periodEnd"
+                ]
               }
             }
           }
@@ -1190,18 +1355,67 @@
             "content": {
               "application/json": {
                 "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "e1e4ec04-0ca4-4b8e-b3c3-4011c5ea2a1f"
+                          },
+                          "chapterId": {
+                            "type": "string",
+                            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "Abstraction Javascript"
+                          },
+                          "Video": {
+                            "type": "string",
+                            "example": "https://youtu.be/ixOd42SEUF0"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2023-10-18T13:42:59.162Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2023-10-18T13:42:59.162Z"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
                   "allOf": [
                     {
-                      "$ref": "#/components/schemas/OK"
+                      "$ref": "#/components/schemas/FAIL"
                     },
                     {
                       "type": "object",
                       "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/Module2"
-                          }
+                        "message": {
+                          "example": "Failed to get the data. Please fill period start and end."
                         }
                       }
                     }
@@ -1279,1749 +1493,25 @@
         }
       }
     },
-    "/api/v1/modules/{id}": {
-      "get": {
-        "tags": [
-          "module"
-        ],
-        "summary": "Get a module details by ID",
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "example": "e1e4ec04-0ca4-4b8e-b3c3-4011c5ea2a1f"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "get course details",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/OK"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "allOf": [
-                              {
-                                "$ref": "#/components/schemas/Module2"
-                              }
-                            ]
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to get course by ID: Course not found"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "module"
-        ],
-        "summary": "Update module",
-        "description": "Update an existing module",
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "operationId": "updateModule",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "example": "82087470-5913-4137-bb57-a889d9b3030e"
-            },
-            "required": true,
-            "description": "ID of the module to be updated"
-          }
-        ],
-        "requestBody": {
-          "description": "Updated Module object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Module"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Update Module",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/OK"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/Module2"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Unauthorized"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden access",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "FORBIDDEN."
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to get course by ID: Course not found"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to update module by ID: ..."
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "module"
-        ],
-        "summary": "Delete module",
-        "description": "Delete an existing module",
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "operationId": "deleteModule",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "example": "82087470-5913-4137-bb57-a889d9b3030e"
-            },
-            "required": true,
-            "description": "ID of the module to be deleted"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Delete Module",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "OK"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Success"
-                    },
-                    "data": {
-                      "allOf": [
-                        {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "example": "82087470-5913-4137-bb57-a889d9b3030e"
-                            }
-                          }
-                        },
-                        {
-                          "$ref": "#/components/schemas/Module"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Unauthorized"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden access",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "FORBIDDEN."
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to get course by ID: Course not found"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to Delete module by ID: ..."
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/chapters": {
-      "get": {
-        "tags": [
-          "chapter"
-        ],
-        "summary": "Get list chapter",
-        "description": "Get all Chapter list",
-        "operationId": "getChapterList",
-        "responses": {
-          "200": {
-            "description": "List of chapter",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "OK"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "oneOf": [
-                          {
-                            "$ref": "#/components/schemas/Chapter2"
-                          },
-                          {
-                            "$ref": "#/components/schemas/Chapter3"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Invalid operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to retrieve the list of chapter"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/courses/{id}/": {
+    "/api/v1/user/Register": {
       "post": {
         "tags": [
-          "chapter"
-        ],
-        "summary": "Create chapter",
-        "description": "create chapter using course ID",
-        "operationId": "createChapter",
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "example": "82087470-5913-4137-bb57-a889d9b3030e"
-            },
-            "required": true,
-            "description": "ID of the course for which the chapter is created"
-          }
-        ],
-        "requestBody": {
-          "description": "Chapter object to be created",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Chapter"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "OK"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
-                      "allOf": [
-                        {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "example": "82087470-5913-4137-bb57-a889d9b3030e"
-                            }
-                          }
-                        },
-                        {
-                          "$ref": "#/components/schemas/Chapter"
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "createdAt": {
-                              "example": "2023-11-24T10:10:02.523Z"
-                            },
-                            "updatedAt": {
-                              "example": "2023-11-24T10:10:02.523Z"
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Unauthorized"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden access",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "FORBIDDEN."
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Invalid operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to retrieve the list of chapter"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/chapters/{id}": {
-      "get": {
-        "tags": [
-          "chapter"
-        ],
-        "summary": "Get a chapter by ID",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "example": "b1d45d20-5307-4f4e-bb5d-44fe9bb5a65d"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "OK"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
-                      "allOf": [
-                        {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "example": "82087470-5913-4137-bb57-a889d9b3030e"
-                            }
-                          }
-                        },
-                        {
-                          "$ref": "#/components/schemas/Chapter"
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "createdAt": {
-                              "example": "2023-11-24T10:10:02.523Z"
-                            },
-                            "updatedAt": {
-                              "example": "2023-11-24T10:10:02.523Z"
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Id Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to get course by ID: Chapter not found"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to get course by ID: ..."
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "chapter"
-        ],
-        "summary": "Update chapter by ID",
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "example": "82087470-5913-4137-bb57-a889d9b3030e"
-            },
-            "required": true
-          }
-        ],
-        "requestBody": {
-          "description": "update chapter",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Chapter"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "OK"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "allOf": [
-                          {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "example": "82087470-5913-4137-bb57-a889d9b3030e"
-                              }
-                            }
-                          },
-                          {
-                            "$ref": "#/components/schemas/Chapter"
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "createdAt": {
-                                "example": "2023-11-24T10:10:02.523Z"
-                              },
-                              "updatedAt": {
-                                "example": "2023-11-24T10:10:02.523Z"
-                              }
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Unauthorized"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden access",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "FORBIDDEN."
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Id Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to get chapter by ID: Chapter not found"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to update chapter by ID"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "chapter"
-        ],
-        "summary": "Get a chapter by ID",
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "example": "82087470-5913-4137-bb57-a889d9b3030e"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "OK"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Success"
-                    },
-                    "data": {
-                      "allOf": [
-                        {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "example": "82087470-5913-4137-bb57-a889d9b3030e"
-                            }
-                          }
-                        },
-                        {
-                          "$ref": "#/components/schemas/Chapter"
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "createdAt": {
-                              "example": "2023-11-24T10:10:02.523Z"
-                            },
-                            "updatedAt": {
-                              "example": "2023-11-24T10:10:02.523Z"
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Unauthorized"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden access",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "FORBIDDEN."
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Id Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to get chapter by ID: Chapter not found"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to delete chapter by ID"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/courses": {
-      "get": {
-        "summary": "Get a list of course",
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "tags": [
-          "course"
-        ],
-        "description": "Get all course list",
-        "parameters": [
-          {
-            "name": "level",
-            "in": "query",
-            "description": "Filter courses by level",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "beginner",
-                "intermediate",
-                "advance"
-              ]
-            }
-          },
-          {
-            "name": "category",
-            "in": "query",
-            "description": "Filter courses by category",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "Product Management",
-                "Web Development",
-                "UI/UX Design",
-                "Android Development",
-                "Data Science"
-              ]
-            }
-          },
-          {
-            "name": "type",
-            "in": "query",
-            "description": "Filter courses by type (free or premium)",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "free",
-                "premium"
-              ]
-            }
-          },
-          {
-            "name": "title",
-            "in": "query",
-            "description": "Filter courses by title",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "creator",
-            "in": "query",
-            "description": "Filter courses by creator",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of courses",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "OK"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "oneOf": [
-                          {
-                            "$ref": "#/components/schemas/Course1"
-                          },
-                          {
-                            "$ref": "#/components/schemas/Course2"
-                          },
-                          {
-                            "$ref": "#/components/schemas/Course3"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Invalid operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to retrieve the list of course"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "course"
-        ],
-        "summary": "Create a course",
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "requestBody": {
-          "description": "Register new user",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "$ref": "#/components/schemas/CourseList"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "OK"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
-                      "allOf": [
-                        {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "example": "82087470-5913-4137-bb57-a889d9b3030e"
-                            }
-                          }
-                        },
-                        {
-                          "$ref": "#/components/schemas/CourseList"
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "createdAt": {
-                              "example": "2023-11-24T10:10:02.523Z"
-                            },
-                            "updatedAt": {
-                              "example": "2023-11-24T10:10:02.523Z"
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Unauthorized"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden access",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "FORBIDDEN."
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Invalid operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to retrieve the list of course"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/courses/{id}": {
-      "get": {
-        "tags": [
-          "course"
-        ],
-        "summary": "Get a course details by ID",
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "example": "b5d70188-6b85-4d98-a975-509a80710671"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "get course details",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/OK"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "allOf": [
-                              {
-                                "$ref": "#/components/schemas/Course3"
-                              },
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "chapters": {
-                                    "type": "array",
-                                    "items": {
-                                      "allOf": [
-                                        {
-                                          "$ref": "#/components/schemas/Chapter"
-                                        },
-                                        {
-                                          "type": "object",
-                                          "properties": {
-                                            "modules": {
-                                              "type": "array",
-                                              "items": {
-                                                "allOf": [
-                                                  {
-                                                    "$ref": "#/components/schemas/Module"
-                                                  }
-                                                ]
-                                              }
-                                            }
-                                          }
-                                        }
-                                      ]
-                                    }
-                                  }
-                                }
-                              }
-                            ]
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Id Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to get course by ID: Course not found"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to get course by ID: ..."
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "course"
-        ],
-        "summary": "Update a course by ID",
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "example": "b5d70188-6b85-4d98-a975-509a80710671"
-            },
-            "required": true
-          }
-        ],
-        "requestBody": {
-          "description": "Register new user",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "$ref": "#/components/schemas/CourseList"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "OK"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Data was updated successfully."
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/CourseList"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Unauthorized"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden access",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "FORBIDDEN."
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Id Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to get course by ID: Course not found"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to update data."
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "course"
-        ],
-        "summary": "Delete a course by ID",
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "example": "82087470-5913-4137-bb57-a889d9b3030e"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "OK"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Deleted successfully."
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/Course3"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Unauthorized"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden access",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "FORBIDDEN."
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Id Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to get course by ID: Course not found"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Internal Server Error"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/register": {
-      "post": {
-        "tags": [
-          "user"
+          "admin"
         ],
         "summary": "Register new user",
-        "description": "Register new user",
+        "description": "User registration must first log in using admin or super admin and provide the token",
         "operationId": "registerUser",
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
         "requestBody": {
-          "description": "Register new user",
+          "description": "Register new admin",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MemberRequest"
+                "$ref": "#/components/schemas/RegisterAdmin"
               }
             }
           },
@@ -3035,6 +1525,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK"
+                    },
                     "message": {
                       "type": "string",
                       "example": "Data was created successfully."
@@ -3088,7 +1582,95 @@
         }
       }
     },
-    "/api/v1/login": {
+    "/api/v1/admin/register": {
+      "post": {
+        "tags": [
+          "super admin"
+        ],
+        "summary": "Register new user",
+        "description": "User registration must first log in using super admin and provide the token",
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "description": "Register new admin",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterAdmin"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Data was created successfully."
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/User3"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Body is missing."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Invalid operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/FAIL"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "example": "Failed to create data. Validation error"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/login": {
       "post": {
         "tags": [
           "user"
@@ -3195,10 +1777,153 @@
         }
       }
     },
-    "/api/v1/users": {
+    "/api/v1/user/roles": {
       "get": {
         "tags": [
-          "user"
+          "admin"
+        ],
+        "summary": "Get all user list",
+        "description": "Get all user list",
+        "operationId": "getUserList",
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User list"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 2
+                          },
+                          "order": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "roleName": {
+                            "type": "string",
+                            "example": "ADMIN"
+                          },
+                          "salary": {
+                            "type": "integer",
+                            "example": 9000000
+                          },
+                          "overtimeBonus": {
+                            "type": "integer",
+                            "example": 50000
+                          },
+                          "absenceDeduction": {
+                            "type": "integer",
+                            "example": 100000
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2024-06-13T15:55:07.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2024-06-13T15:55:07.000Z"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/FAIL"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "example": "Unauthorized"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/FAIL"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "example": "FORBIDDEN."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Token expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/FAIL"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "example": "jwt expired"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/users": {
+      "get": {
+        "tags": [
+          "admin"
         ],
         "summary": "Get all user list",
         "description": "Get all user list",
@@ -3535,8 +2260,8 @@
         }
       }
     },
-    "/api/v1/current-user": {
-      "get": {
+    "/api/v1/user/current-user": {
+      "post": {
         "tags": [
           "user"
         ],
@@ -3614,156 +2339,6 @@
                             "invalid token",
                             "jwt expired"
                           ]
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/admin/register": {
-      "post": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Register new admin",
-        "description": "Register new admin",
-        "operationId": "registerAdmin",
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "requestBody": {
-          "description": "Register new admin",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterAdmin"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Data was created successfully."
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/User2"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Body is missing."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Unauthorized"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Invalid operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to create data. Validation error"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/my-courses": {
-      "get": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Get current user information",
-        "description": "Get current user information",
-        "operationId": "user Course",
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/OK"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "success."
-                        },
-                        "data": {
-                          "$ref": "#/components/schemas/UserCourse"
                         }
                       }
                     }
@@ -3944,8 +2519,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string",
-            "example": "d2d6d792-fe75-4613-b1c2-579ed0564b3c"
+            "type": "integer",
+            "example": 1
           },
           "name": {
             "type": "string",
@@ -3954,10 +2529,6 @@
           "email": {
             "type": "string",
             "example": "root@gmail.com"
-          },
-          "encryptedPassword": {
-            "type": "string",
-            "example": "$2b$10$CZWqOKzxtogiTgPNLmxMXORb0fEuZxr0qrEuh2exgpe5I8c6Zq.Du"
           },
           "phoneNumber": {
             "type": "string",
@@ -3969,28 +2540,36 @@
           },
           "address": {
             "type": "string",
-            "example": "Earth"
+            "example": null
           },
-          "role": {
+          "privilege": {
             "type": "string",
-            "enum": [
-              "ROOT",
-              "ADMIN",
-              "MEMBER"
-            ],
             "example": "ROOT"
           },
-          "country": {
-            "type": "string",
-            "example": "indonesia"
+          "roleId": {
+            "type": "integer",
+            "example": 1
           },
           "createdAt": {
             "type": "string",
-            "example": "2023-10-18T13:42:59.162Z"
+            "example": "2024-06-13T15:55:07.000Z"
           },
           "updatedAt": {
             "type": "string",
-            "example": "2023-10-18T13:42:59.162Z"
+            "example": "2024-06-13T15:55:07.000Z"
+          },
+          "JobRole": {
+            "type": "object",
+            "properties": {
+              "roleName": {
+                "type": "string",
+                "example": "OWNER"
+              },
+              "salary": {
+                "type": "integer",
+                "example": 20000000
+              }
+            }
           }
         }
       },
@@ -3998,45 +2577,57 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string",
-            "example": "640f98ab-951b-4b7b-845d-6e78b411b566"
+            "type": "integer",
+            "example": 1
           },
           "name": {
             "type": "string",
-            "example": "TESTER"
+            "example": "root"
           },
           "email": {
             "type": "string",
-            "example": "test@gmail.com"
-          },
-          "encryptedPassword": {
-            "type": "string",
-            "example": "$2b$10$P0VY83faE3Wy71l5ZGq4ZunVoxb6wy4q1SxZAZLU7PgOm4RMfw0oK"
+            "example": "root@gmail.com"
           },
           "phoneNumber": {
             "type": "string",
             "example": "082112345678"
           },
+          "image": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/djsjnrfv0/image/upload/v1702988069/BINAR/mqtkzduziqwhdvxu1vzh.png"
+          },
           "address": {
             "type": "string",
-            "example": "Earth"
+            "example": null
           },
-          "role": {
+          "privilege": {
             "type": "string",
-            "enum": [
-              "ROOT",
-              "ADMIN",
-              "MEMBER"
-            ],
-            "example": "ADMIN"
+            "example": "ROOT"
+          },
+          "roleId": {
+            "type": "integer",
+            "example": 1
           },
           "createdAt": {
             "type": "string",
-            "example": "2023-10-18T13:42:59.162Z"
+            "example": "2024-06-13T15:55:07.000Z"
           },
           "updatedAt": {
             "type": "string",
-            "example": "2023-10-18T13:42:59.162Z"
+            "example": "2024-06-13T15:55:07.000Z"
+          },
+          "JobRole": {
+            "type": "object",
+            "properties": {
+              "roleName": {
+                "type": "string",
+                "example": "OWNER"
+              },
+              "salary": {
+                "type": "integer",
+                "example": 20000000
+              }
+            }
           }
         }
       },
@@ -4086,61 +2677,6 @@
           }
         }
       },
-      "UserCourse": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "courseId": {
-            "type": "string",
-            "format": "uuid"
-          }
-        }
-      },
-      "CourseList": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "example": "Learn Basic Javascript"
-          },
-          "type": {
-            "type": "string",
-            "example": "premium"
-          },
-          "level": {
-            "type": "string",
-            "example": "beginner"
-          },
-          "price": {
-            "type": "number",
-            "example": 99000
-          },
-          "description": {
-            "type": "string",
-            "example": "Some description"
-          },
-          "image": {
-            "type": "string",
-            "format": "base64",
-            "example": "image.jpg"
-          },
-          "creator": {
-            "type": "string",
-            "example": "John Doe"
-          },
-          "category": {
-            "type": "string",
-            "example": "Product Management"
-          },
-          "telegram": {
-            "type": "string",
-            "example": "https://web.telegram.org/"
-          }
-        }
-      },
       "Notif1": {
         "type": "object",
         "properties": {
@@ -4176,336 +2712,6 @@
           "createdAt": {
             "type": "string",
             "example": "2023-12-19T06:49:23.721Z"
-          }
-        }
-      },
-      "Course1": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "title": {
-            "type": "string",
-            "example": "Learn Basic Javascript"
-          },
-          "type": {
-            "type": "string",
-            "example": "premium"
-          },
-          "level": {
-            "type": "string",
-            "example": "beginner"
-          },
-          "price": {
-            "type": "number",
-            "example": 99000
-          },
-          "forWho": {
-            "type": "string",
-            "example": "everyone"
-          },
-          "description": {
-            "type": "string",
-            "example": "Some description"
-          },
-          "image": {
-            "type": "string",
-            "format": "base64",
-            "example": "https://res.cloudinary.com/djsjnrfv0/image/upload/v1701248815/BINAR/nwnt4ty0nxgrx1hyh8ce.jpg"
-          },
-          "category": {
-            "type": "string",
-            "example": "Product Management"
-          },
-          "telegram": {
-            "type": "string",
-            "example": "https://web.telegram.org/"
-          },
-          "creator": {
-            "type": "string",
-            "example": "John Doe"
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2023-10-18T13:42:59.162Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2023-10-18T13:42:59.162Z"
-          }
-        }
-      },
-      "Course2": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "title": {
-            "type": "string",
-            "example": "New Course"
-          },
-          "type": {
-            "type": "string",
-            "example": "free"
-          },
-          "level": {
-            "type": "string",
-            "example": "intermediate"
-          },
-          "price": {
-            "type": "number",
-            "example": 20000
-          },
-          "forWho": {
-            "type": "string",
-            "example": "targetedAudience"
-          },
-          "description": {
-            "type": "string",
-            "example": "Description for the new course"
-          },
-          "image": {
-            "type": "string",
-            "format": "base64",
-            "example": "https://res.cloudinary.com/djsjnrfv0/image/upload/v1701248815/BINAR/nwnt4ty0nxgrx1hyh8ce.jpg"
-          },
-          "category": {
-            "type": "string",
-            "example": "Web Development"
-          },
-          "telegram": {
-            "type": "string",
-            "example": "https://web.telegram.org/"
-          },
-          "creator": {
-            "type": "string",
-            "example": "Jane Doe"
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2023-10-18T13:42:59.162Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2023-10-18T13:42:59.162Z"
-          }
-        }
-      },
-      "Course3": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "title": {
-            "type": "string",
-            "example": "New Course"
-          },
-          "type": {
-            "type": "string",
-            "example": "premium"
-          },
-          "level": {
-            "type": "string",
-            "example": "intermediate"
-          },
-          "price": {
-            "type": "number",
-            "example": 60000
-          },
-          "forWho": {
-            "type": "string",
-            "example": "targetedAudience"
-          },
-          "description": {
-            "type": "string",
-            "example": "Description for the new course"
-          },
-          "image": {
-            "type": "string",
-            "format": "base64",
-            "example": "https://res.cloudinary.com/djsjnrfv0/image/upload/v1701248815/BINAR/nwnt4ty0nxgrx1hyh8ce.jpg"
-          },
-          "category": {
-            "type": "string",
-            "example": "Web Development"
-          },
-          "telegram": {
-            "type": "string",
-            "example": "https://web.telegram.org/"
-          },
-          "creator": {
-            "type": "string",
-            "example": "Jane Doe"
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2023-10-18T13:42:59.162Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2023-10-18T13:42:59.162Z"
-          }
-        }
-      },
-      "Chapter": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "example": "Set Up Project Tailwind with Shadcn UI"
-          },
-          "chapterNumber": {
-            "type": "number",
-            "example": 1
-          },
-          "duration": {
-            "type": "integer",
-            "example": 60
-          }
-        }
-      },
-      "Chapter2": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "title": {
-            "type": "string",
-            "example": "Set Up Project Tailwind with Shadcn UI"
-          },
-          "chapterNumber": {
-            "type": "number",
-            "example": 1
-          },
-          "courseId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "duration": {
-            "type": "integer",
-            "example": 60
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2023-10-18T13:42:59.162Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2023-10-18T13:42:59.162Z"
-          }
-        }
-      },
-      "Chapter3": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "title": {
-            "type": "string",
-            "example": "Set Up Project Tailwind with Shadcn UI"
-          },
-          "chapterNumber": {
-            "type": "number",
-            "example": 1
-          },
-          "courseId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "duration": {
-            "type": "integer",
-            "example": 60
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2023-10-18T13:42:59.162Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2023-10-18T13:42:59.162Z"
-          }
-        }
-      },
-      "Module": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "example": "Inheritance Javascript"
-          },
-          "Video": {
-            "type": "string",
-            "example": "https://youtu.be/DwTkyMJi890"
-          }
-        }
-      },
-      "Module2": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "e1e4ec04-0ca4-4b8e-b3c3-4011c5ea2a1f"
-          },
-          "chapterId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "title": {
-            "type": "string",
-            "example": "Abstraction Javascript"
-          },
-          "Video": {
-            "type": "string",
-            "example": "https://youtu.be/ixOd42SEUF0"
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2023-10-18T13:42:59.162Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2023-10-18T13:42:59.162Z"
-          }
-        }
-      },
-      "Module3": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "e1e4ec04-0ca4-4b8e-b3c3-4011c5ea2a1f"
-          },
-          "chapterId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "title": {
-            "type": "string",
-            "example": "Abstraction Javascript"
-          },
-          "Video": {
-            "type": "string",
-            "example": "https://youtu.be/ixOd42SEUF0"
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2023-10-18T13:42:59.162Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2023-10-18T13:42:59.162Z"
           }
         }
       },
@@ -4545,269 +2751,6 @@
           "password": {
             "type": "string",
             "example": "test1234"
-          }
-        }
-      },
-      "OrderCreditCard": {
-        "type": "object",
-        "properties": {
-          "paymentMethod": {
-            "type": "string",
-            "example": "Credit Card"
-          },
-          "cardNumber": {
-            "type": "string",
-            "example": 341000485488983
-          },
-          "cardHolderName": {
-            "type": "string",
-            "example": "jose Smith"
-          },
-          "cvv": {
-            "type": "string",
-            "example": 233
-          },
-          "expiryDate": {
-            "type": "string",
-            "example": "05/25"
-          }
-        }
-      },
-      "changePassword": {
-        "type": "object",
-        "properties": {
-          "password": {
-            "type": "string",
-            "example": "root"
-          },
-          "newPassword": {
-            "type": "string",
-            "example": "root123"
-          }
-        }
-      },
-      "OrderBankTransfer": {
-        "type": "object",
-        "properties": {
-          "paymentMethod": {
-            "type": "string",
-            "example": "Bank Transfer"
-          }
-        }
-      },
-      "OKOrderCreditCard": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "fef89fef-0ce8-4b8d-8647-1a924e488d52"
-          },
-          "userId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "8ae3a322-ecdd-4752-b1c7-603c064bb952"
-          },
-          "courseId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "746112de-b9c0-464b-bc8e-74e524ec1408"
-          },
-          "status": {
-            "type": "string",
-            "example": "COMPLETED"
-          },
-          "paymentMethod": {
-            "type": "string",
-            "example": "Credit Card"
-          },
-          "expiredDateAt": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2023-12-13T06:14:54.792Z"
-          },
-          "cardNumber": {
-            "type": "string",
-            "example": "1234567891012141"
-          },
-          "cardHolderName": {
-            "type": "string",
-            "example": "John Doe"
-          },
-          "cvv": {
-            "type": "string",
-            "example": "1234"
-          },
-          "expiryDate": {
-            "type": "string",
-            "example": "08/24"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2023-12-13T05:14:54.793Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2023-12-13T05:15:08.237Z"
-          }
-        }
-      },
-      "OKOrderBankTransfer": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "fef89fef-0ce8-4b8d-8647-1a924e488d52"
-          },
-          "userId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "8ae3a322-ecdd-4752-b1c7-603c064bb952"
-          },
-          "courseId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "746112de-b9c0-464b-bc8e-74e524ec1408"
-          },
-          "status": {
-            "type": "string",
-            "example": "COMPLETED"
-          },
-          "paymentMethod": {
-            "type": "string",
-            "example": "Bank Transfer"
-          },
-          "expiredDateAt": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2023-12-13T06:14:54.792Z"
-          },
-          "cardNumber": {
-            "type": "string",
-            "example": "null"
-          },
-          "cardHolderName": {
-            "type": "string",
-            "example": "null"
-          },
-          "cvv": {
-            "type": "string",
-            "example": "null"
-          },
-          "expiryDate": {
-            "type": "string",
-            "example": "null"
-          }
-        }
-      },
-      "OKOrderCANCELED": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "fef89fef-0ce8-4b8d-8647-1a924e488d52"
-          },
-          "userId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "8ae3a322-ecdd-4752-b1c7-603c064bb952"
-          },
-          "courseId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "746112de-b9c0-464b-bc8e-74e524ec1408"
-          },
-          "status": {
-            "type": "string",
-            "example": "CANCELED"
-          },
-          "paymentMethod": {
-            "type": "string",
-            "example": "null"
-          },
-          "expiredDateAt": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2023-12-13T06:14:54.792Z"
-          },
-          "cardNumber": {
-            "type": "string",
-            "example": "null"
-          },
-          "cardHolderName": {
-            "type": "string",
-            "example": "null"
-          },
-          "cvv": {
-            "type": "string",
-            "example": "null"
-          },
-          "expiryDate": {
-            "type": "string",
-            "example": "null"
-          }
-        }
-      },
-      "OrderDetails": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "49b69738-e8e3-4446-b976-c9bb4e62c5e8"
-          },
-          "userId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "f508c403-9260-4d18-a0c9-d22d5d6117e0"
-          },
-          "courseId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "b5d70188-6b85-4d98-a975-509a80710671"
-          },
-          "expiredDateAt": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2023-12-14T06:42:32.658Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2023-12-14T05:42:32.658Z"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2023-12-14T05:42:32.658Z"
-          },
-          "status": {
-            "type": "string",
-            "example": "PENDING"
-          },
-          "paymentMethod": {
-            "type": "string",
-            "nullable": true
-          },
-          "cardNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "cardHolderName": {
-            "type": "string",
-            "nullable": true
-          },
-          "cvv": {
-            "type": "string",
-            "nullable": true
-          },
-          "expiryDate": {
-            "type": "string",
-            "nullable": true
           }
         }
       }
