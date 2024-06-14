@@ -17,8 +17,14 @@ const isBodyNotNull = async (req, res, next) => {
 // Get all leave request
 router.get('/admin/leaves', AuthMiddleware.authorize, AuthMiddleware.isRootOrAdmin, LeaveRequestController.findAll)
 
+// Confirm leave request
+router.post('/admin/leaves/:id', AuthMiddleware.authorize, AuthMiddleware.isRootOrAdmin, LeaveRequestController.findByPk, LeaveRequestController.confirmLeave)
+
 // USER
 // register admin
 router.get('/user/leaves', AuthMiddleware.authorize, LeaveRequestController.findAllMyRequest)
+
+// register admin
+router.post('/user/leaves', AuthMiddleware.authorize, LeaveRequestController.requestLeave)
 
 module.exports = router

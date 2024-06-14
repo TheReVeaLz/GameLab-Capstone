@@ -17,6 +17,14 @@ const findOne = async (payload) => {
     }
 }
 
+const findByPk = async (id) => {
+    try {
+        return await LeaveRequestRepo.findByPk(id);
+    } catch (err) {
+        throw new ApplicationError(`Failed to get the data. ${err.message}`);
+    }
+}
+
 const create = async (payload) => {
     try {
         return await LeaveRequestRepo.create(payload);
@@ -25,8 +33,18 @@ const create = async (payload) => {
     }
 }
 
+const update = async (payload) => {
+    try {
+        return await LeaveRequestRepo.update(payload);
+    } catch (err) {
+        throw new ApplicationError(`Failed to update data. ${err.message}`,  err.statusCode || 500);
+    }
+}
+
 module.exports = {
     findAll,
     findOne,
-    create
+    findByPk,
+    create,
+    update
 }

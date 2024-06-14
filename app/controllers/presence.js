@@ -40,19 +40,6 @@ const getPresenceById = async (req, res) => {
   }
 }
 
-const updatePresence = async (req, res) => {
-  try {
-      const { id } = req.params;
-      const data = req.body;
-      // Tambahkan userId ke data presence dari req
-      data.userId = req.user.id;
-      const presence = await presenceService.updatePresence(id, data);
-      res.json({ status: "OK", message: "Presence data was updated successfully.", data: presence });
-  } catch (err) {
-      res.status(err.statusCode || 400).json({ status: "FAIL", message: err.message });
-  }
-}
-
 const deletePresence = async (req, res) => {
   try {
       const { id } = req.params;
@@ -67,7 +54,6 @@ module.exports = {
   presence,
   getAllPresences,
   getPresenceById,
-  updatePresence,
   deletePresence,
   getAllPresencesUser
 }

@@ -40,10 +40,6 @@ const create = async (payload, isAdmin) => {
             roleId
         });
 
-        // await NotificationService.create(user.id,{ title: 'Register Success', message: 'Selamat Datang !!' })
-        // await sendOtp(user, "verify");
-        // delete user.dataValues.verified;
-
         return user;
     } catch (err) {
         throw new ApplicationError(`Failed to create data. ${err.message}`, err.statusCode || 500);

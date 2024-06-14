@@ -8,7 +8,6 @@ router.post('/user/presence', AuthMiddleware.authorize, presenceController.prese
 router.get('/user/presence/:id', AuthMiddleware.authorize, presenceController.getPresenceById);
 router.get('/user/presenceAll', AuthMiddleware.authorize, presenceController.getAllPresences);
 router.get('/user/presence', AuthMiddleware.authorize, presenceController.getAllPresencesUser);
-router.put('/user/presence/:id',  AuthMiddleware.authorize, presenceController.updatePresence);
 router.delete('/user/presence/:id', AuthMiddleware.authorize, presenceController.deletePresence);
 
 module.exports = router;

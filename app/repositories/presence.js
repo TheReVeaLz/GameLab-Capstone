@@ -4,6 +4,10 @@ async function create(body) {
     return await Presence.create(body);
 }
 
+async function bulkCreate(body) {
+    return await Presence.bulkCreate(body);
+}
+
 const getPresenceById = async (id) => {
     return await Presence.findByPk(id, {
         include: [User]
@@ -71,6 +75,7 @@ const deletePresence = async (id) => {
 
 module.exports = {
     create,
+    bulkCreate,
     getPresenceById,
     findAll,
     findOne,

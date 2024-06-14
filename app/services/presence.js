@@ -3,6 +3,14 @@ const ApplicationError = require('../../config/errors/ApplicationError');
 const notificationService = require('../services/notification');
 const Helper = require('../../middlewares/helper');
 
+const bulkCreate = async (data) => {
+    try {
+        return await presenceRepository.bulkCreate(data);
+    } catch (err) {
+        throw new ApplicationError(`Failed to create the data. ${err.message}`, 400);
+    }
+}
+
 const presence = async (data) => {
     try {
         // Get the current time in WIB (Western Indonesia Time)
@@ -10,23 +18,23 @@ const presence = async (data) => {
         
         // Assign the WIB time to the presenceDate and checkIn fields
         data.presenceDate = Helper.DayLocal();
-
+        
         // Get today presence
         const todayPresence = await presenceRepository.findOne({ userId: data.userId, presenceDate: data.presenceDate });
-
+        
         if (todayPresence) {
             if (todayPresence.checkIn && todayPresence.checkOut)
                 throw new Error("Already presence today.");
-
+            
             const payload = { checkOut: today };
             const checkOutTime = Helper.DayLocal(15);
-
+            
             if (todayPresence.status != "LATE" && today > checkOutTime)
                 payload.overtime = Helper.GetHoursDifference(today, checkOutTime)
             
             return await todayPresence.update(payload);
         }
-
+        
         data.checkIn = today;
         
         // Check if the check-in time is late
@@ -39,8 +47,10 @@ const presence = async (data) => {
         } else {
             data.status = 'ONTIME';
         }
-          // Create notification for check-in
-          await notificationService.create(data.userId, { title: 'Check-In', message: 'You have checked in successfully.' });
+        
+        // Create notification for check-in
+        await notificationService.create(data.userId, { title: 'Check-In', message: 'You have checked in successfully.' });
+        
         // Save the presence data
         return await presenceRepository.create(data);
     } catch (err) {
@@ -76,24 +86,6 @@ const getAllPresencesUser = async (userId) => {
     }
 }
 
-const updatePresence = async (id, data) => {
-    try {
-        // Get the current time in WIB (Western Indonesia Time)
-        const today = new Date();
-        today.setHours(today.getHours() + 7); // Adjust the time to WIB
-        
-        // Assign the WIB time to the checkOut field
-        data.checkOut = today;
-         // Create notification for updating presence
-         await notificationService.create(data.userId, { title: 'Update Presence', message: 'Your presence record has been updated.' });
-        
-        // Update the presence data
-        return await presenceRepository.updatePresence(id, data);
-    } catch (err) {
-        throw new ApplicationError(`Failed to update presence. ${err.message}`, 400);
-    }
-};
-
 
 const deletePresence = async (id) => {
     try {
@@ -105,10 +97,10 @@ const deletePresence = async (id) => {
 }
 
 module.exports = {
+    bulkCreate,
     presence,
     getPresenceById,
     getAllPresences,
-    updatePresence,
     deletePresence,
     getAllPresencesUser
 };
