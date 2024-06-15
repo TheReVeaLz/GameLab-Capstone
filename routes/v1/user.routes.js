@@ -3,6 +3,7 @@ const router = Router()
 
 const Auth = require('../../app/controllers/user')
 const AuthMiddleware = require('../../middlewares/auth')
+const GeneralMiddleware = require('../../middlewares/general')
 const JobRoleController = require('../../app/controllers/jobrole')
 
 const isBodyNotNull = async (req, res, next) => {
@@ -19,6 +20,9 @@ const isBodyNotNull = async (req, res, next) => {
 router.post('/admin/register', isBodyNotNull, AuthMiddleware.authorize, AuthMiddleware.isRoot, Auth.registerAdmin)
 
 // ADMIN
+// get dashboard info
+router.get('/admin/dashboard', AuthMiddleware.authorize, AuthMiddleware.isRootOrAdmin, GeneralMiddleware.GetDashboardInfo)
+
 // get roles
 router.get('/user/roles', AuthMiddleware.authorize, AuthMiddleware.isRootOrAdmin, JobRoleController.findAll)
 
