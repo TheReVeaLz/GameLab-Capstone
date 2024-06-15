@@ -21,7 +21,7 @@ module.exports = {
     for(let j = 0; j < users.length; j++) {
       const today = new Date();
 
-      for(let i = 1; i < 12-1; i++) {
+      for(let i = 1; i < today.getMonth(); i++) {
         const periodStart = new Date(today.getFullYear(), i, 25);
         periodStart.setHours(0, 0, 0);
 
