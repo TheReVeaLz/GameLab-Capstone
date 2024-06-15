@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Binar Academy Post API - FSW1
+  title: Api Documentation
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -17,8 +17,8 @@ tags:
     description: Operations about your admin
   - name: super admin
     description: Operations about your super admin
-  - name: otp
-    description: Operations about your Otp
+  - name: leave request
+    description: Operations about your leave
   - name: presence
     description: Operations about your Presence
   - name: payslips
@@ -366,24 +366,18 @@ paths:
                       message:
                         example: "Internal Server Error"
 
-  /api/v1/account-verify:
-    post:
+  /api/v1/admin/leaves:
+    get:
       tags:
-        - otp
-      summary: Verify
-      description: Verify the account using OTP.
-      operationId: postVerify
-      requestBody:
-        description: Object containing OTP for account verification
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Verify"
-
+        - leave request
+      summary: Get all leave requests
+      description: Retrieve all leave requests for admin approval.
+      operationId: getAllLeaveRequests
+      security:
+        - api_key: []
       responses:
-        "201":
-          description: Successful response. Account is verified successfully. 
+        "200":
+          description:  Successful response. Retrieves all leave requests.
           content:
             application/json:
               schema:
@@ -394,7 +388,7 @@ paths:
                     example: "OK"
                   message:
                     type: string
-                    example: "Account is verified successfully."
+                    example: "All data successfully retrieved."
                   data:
                     type: array
                     items:
@@ -424,20 +418,195 @@ paths:
                     properties:
                       message:
                         example: "OTP is invalid."
-  /api/v1/resend-otp:
+  /api/v1/user/leaves:
+    get:
+      tags:
+        - leave request
+      summary: Get user's leave requests
+      description: Retrieve leave requests submitted by the user.
+      operationId: getUserLeaveRequests
+      security:
+        - api_key: []
+      responses:
+        "200":
+          description: Successful response. Retrieves user's leave requests.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "success"
+
+        "400":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/FAIL"
+                  - type: object
+                    properties:
+                      message:
+                        example: "Your account is not exist."
+
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/FAIL"
+                  - type: object
+                    properties:
+                      message:
+                        example: "OTP is invalid."
+    
     post:
       tags:
-        - otp
-      summary: Post resend otp
-      description: resend Otp
-      operationId: resendOtp
+        - leave request
+      summary: Request Leave
+      description: Request leave with specified start and end dates.
+      operationId: requestLeave
+      security:
+        - api_key: []
       requestBody:
-        description: email
+        description: Object containing details for leave request.
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ResendOtp"
+              type: object
+              properties:
+                startDate:
+                  type: string
+                  format: date
+                  example: 2024-06-15T13:17:28.475Z
+                endDate:
+                  type: string
+                  format: date
+                  example: 2024-06-15T13:17:28.475Z
+              
+      responses:
+        "200":
+          description: Leave request successful.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "All data successfully retrieved."
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      requestDate:
+                        type: string
+                        format: date-time
+                        example: "2024-06-15T13:17:28.475Z"
+                      userId:
+                        type: integer
+                        example: 1
+                      startDate:
+                        type: string
+                        format: date-time
+                        nullable: true
+                        example: null
+                      endDate:
+                        type: string
+                        format: date-time
+                        nullable: true
+                        example: null
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2024-06-15T13:17:28.475Z"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2024-06-15T13:17:28.475Z"
+
+        "400":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/FAIL"
+                  - type: object
+                    properties:
+                      message:
+                        example: "Your account is not exist."
+
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/FAIL"
+                  - type: object
+                    properties:
+                      message:
+                        example: "OTP is invalid."
+                        
+  /api/v1/admin/leaves/{id}:
+    post:
+      tags:
+        - leave request
+      summary: Respond to Leave Request
+      description: Accept or reject a leave request by ID.
+      operationId: respondToLeaveRequest
+      security:
+        - api_key: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: integer
+            example: "1"
+          required: true
+      requestBody:
+        description: Object containing response details (status = ACCEPTED or REJECTED).
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "user@example.com"
+                phone:
+                  type: string
+                  example: "1234567890"
+                startDate:
+                  type: string
+                  format: date-time
+                  example: "2024-06-15T13:17:28.475Z"
+                endDate:
+                  type: string
+                  format: date-time
+                  example: "2024-06-15T13:17:28.475Z"
+                status:
+                  type: string
+                  enum:
+                    - PENDING
+                    - ACCEPTED
+                    - REJECTED
+                  example: "PENDING"
 
       responses:
         "200":
@@ -452,60 +621,7 @@ paths:
                     example: "OK"
                   message:
                     type: string
-                    example: "success"
-
-        "400":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/FAIL"
-                  - type: object
-                    properties:
-                      message:
-                        example: "Your account is not exist."
-
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/FAIL"
-                  - type: object
-                    properties:
-                      message:
-                        example: "OTP is invalid."
-  /api/v1/forgot-password:
-    post:
-      tags:
-        - otp
-      summary: Forgot password
-      description: forgot password use otp
-      operationId: forgot password
-      requestBody:
-        description: Module object to be created
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ResendOtp"
-
-      responses:
-        "201":
-          description: Resend-Otp
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: "OK"
-                  message:
-                    type: string
-                    example: "success"
+                    example: "You can't change confirmed data."
 
         "400":
           description: Internal Server Error
@@ -529,58 +645,8 @@ paths:
                     properties:
                       message:
                         example: "Your account is not exist."
-    put:
-      tags:
-        - otp
-      summary: Forgot password
-      description: forgot password use otp
-      operationId: forgotpassword
-      requestBody:
-        description: Module object to be created
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ForgotPassword"
 
-      responses:
-        "201":
-          description: Resend-Otp
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: "OK"
-                  message:
-                    type: string
-                    example: "success"
-
-        "400":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/FAIL"
-                  - type: object
-                    properties:
-                      message:
-                        example: "Your account is not exist."
-
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/FAIL"
-                  - type: object
-                    properties:
-                      message:
-                        example: "OTP is invalid."
+                        
   /api/v1/user/payslips:
     get:
       tags:
@@ -596,16 +662,92 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: "#/components/schemas/OK"
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          oneOf:
-                            - $ref: "#/components/schemas/Module2"
-                            - $ref: "#/components/schemas/Module3"
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 51
+                        periodStart:
+                          type: string
+                          format: date-time
+                          example: "2024-05-31T17:00:00.000Z"
+                        periodEnd:
+                          type: string
+                          format: date-time
+                          example: "2024-06-30T17:00:00.000Z"
+                        salary:
+                          type: integer
+                          example: 20000000
+                        overtimeBonus:
+                          type: integer
+                          example: 0
+                        deduction:
+                          type: integer
+                          example: 7250000
+                        netWorth:
+                          type: integer
+                          example: 12750000
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2024-06-14T01:04:57.000Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          example: "2024-06-14T01:04:57.000Z"
+                        userId:
+                          type: integer
+                          example: 1
+                        User:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: "root"
+                            email:
+                              type: string
+                              example: "root@gmail.com"
+                            encryptedPassword:
+                              type: string
+                              example: "$2b$10$XfgiOba1Wff93hHSFN7S1ewj5Zsx8T70Ox6baED5E/tvs9R8K0f06"
+                            phoneNumber:
+                              type: string
+                              example: "082112345678"
+                            image:
+                              type: string
+                              example: "https://res.cloudinary.com/djsjnrfv0/image/upload/v1702988069/BINAR/mqtkzduziqwhdvxu1vzh.png"
+                            address:
+                              type: string
+                              nullable: true
+                              example: null
+                            privilege:
+                              type: string
+                              example: "ROOT"
+                            roleId:
+                              type: integer
+                              example: 1
+                            createdAt:
+                              type: string
+                              format: date-time
+                              example: "2024-06-13T15:55:07.000Z"
+                            updatedAt:
+                              type: string
+                              format: date-time
+                              example: "2024-06-13T15:55:07.000Z"
         "401":
           description: Unauthorized. Invalid or missing API key.
           content:
@@ -1183,7 +1325,7 @@ paths:
         - admin
       summary: Get all user list
       description: Get all user list
-      operationId: getUserList
+      operationId: get User List
       security:
         - api_key: []
       responses:
@@ -1296,74 +1438,7 @@ paths:
                       message:
                         example: jwt expired
                         
-  /api/v1/reset-password:
-    put:
-      tags:
-        - user
-      summary: Change Password
-      description: change user password
-      operationId: Change Password
-      security:
-        - api_key: []
-      requestBody:
-        description: Register new admin
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/changePassword"
-        required: true
 
-      responses:
-        "201":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/OK"
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          type: object
-                          oneOf:
-                            - $ref: "#/components/schemas/changePassword"
-
-        "400":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/FAIL"
-                  - type: object
-                    properties:
-                      message:
-                        example: Failed to update data. Password doesn't match
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/FAIL"
-                  - type: object
-                    properties:
-                      message:
-                        example: Unauthorized
-                        
-        "500":
-          description: Token expired
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/FAIL"
-                  - type: object
-                    properties:
-                      message:
-                        example: jwt expired
 
   /api/v1/user/current-user:
     post:
