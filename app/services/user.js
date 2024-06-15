@@ -36,7 +36,7 @@ const create = async (payload, isAdmin) => {
             name,
             address,
             phoneNumber,
-            role: isAdmin ? 'ADMIN': 'MEMBER',
+            privilege: isAdmin ? 'ADMIN': 'MEMBER',
             roleId
         });
 

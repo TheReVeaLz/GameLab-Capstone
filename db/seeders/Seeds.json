@@ -2,7 +2,8 @@
     "users": [
         {
             "id": 2,
-            "name": "Johnny"
+            "name": "Johnny",
+            "privilege": "ADMIN"
         },
         {
             "id": 3,

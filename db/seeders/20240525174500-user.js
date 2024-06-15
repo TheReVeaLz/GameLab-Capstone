@@ -25,6 +25,7 @@ module.exports = {
       email: `${user.name.toLowerCase()}@gmail.com`,
       encryptedPassword,
       phoneNumber: "082112345678",
+      privilege: user.privilege ? user.privilege : "MEMBER",
       roleId: 1,
       createdAt: timestamp,
       updatedAt: timestamp,
