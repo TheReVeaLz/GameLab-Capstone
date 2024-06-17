@@ -1778,7 +1778,7 @@
           }
         ],
         "requestBody": {
-          "description": "Register new admin",
+          "description": "Change user password",
           "content": {
             "application/json": {
               "schema": {
@@ -1949,6 +1949,130 @@
                       "properties": {
                         "message": {
                           "example": "Email or password is invalid."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/change-password": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Change Password",
+        "description": "change user password",
+        "operationId": "Change Password",
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "description": "Change user password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/changePassword"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OK"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "$ref": "#/components/schemas/changePassword"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/FAIL"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "example": "Failed to update data. Password doesn't match"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/FAIL"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "example": "Unauthorized"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Token expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/FAIL"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "example": "jwt expired"
                         }
                       }
                     }
@@ -2231,7 +2355,7 @@
           }
         ],
         "requestBody": {
-          "description": "Register new admin",
+          "description": "Change user password",
           "content": {
             "application/json": {
               "schema": {
@@ -2787,29 +2911,16 @@
           }
         }
       },
-      "ResendOtp": {
+      "changePassword": {
         "type": "object",
         "properties": {
-          "email": {
-            "type": "string",
-            "example": "test2@gmail.com"
-          }
-        }
-      },
-      "ForgotPassword": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "example": "test2@gmail.com"
-          },
-          "otp": {
-            "type": "string",
-            "example": 658277
-          },
           "password": {
             "type": "string",
-            "example": "test1234"
+            "example": "root"
+          },
+          "newPassword": {
+            "type": "string",
+            "example": "root123"
           }
         }
       }

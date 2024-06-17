@@ -39,6 +39,9 @@ router.post('/user/login', isBodyNotNull, Auth.login)
 // get current user
 router.post('/user/current-user', AuthMiddleware.authorize, Auth.currentUser)
 
+// change user password
+router.put('/user/change-password', AuthMiddleware.authorize, Auth.changePassword)
+
 // get user notification
 router.get('/notifications', AuthMiddleware.authorize, Auth.notification )
 

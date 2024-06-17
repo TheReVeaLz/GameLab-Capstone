@@ -108,7 +108,7 @@ paths:
                     properties:
                       message:
                         example: "Failed to get presence."
-    
+
     post:
       tags:
         - presence
@@ -179,7 +179,7 @@ paths:
                     properties:
                       message:
                         example: "Failed to create presence"
-                        
+
   /api/v1/user/presence/{id}:
     get:
       tags:
@@ -197,54 +197,54 @@ paths:
         - api_key: []
       description: Retrieve details of a specific presence record
       responses:
-            200:
-              description: Successful response
-              content:
-                application/json:
-                  example:
-                    status: "OK"
-                    message: "Success"
-                    data:
-                      id: 1
-                      userId: 1
-                      presenceDate: "2024-06-12T17:00:00.000Z"
-                      checkIn: "2024-06-13T16:02:25.000Z"
-                      checkOut: null
-                      overtime: null
-                      status: "LATE"
-                      createdAt: "2024-06-13T16:02:25.000Z"
-                      updatedAt: "2024-06-13T16:02:25.000Z"
-                      User:
-                        id: 1
-                        name: "root"
-                        email: "root@gmail.com"
-                        encryptedPassword: "$2b$10$XfgiOba1Wff93hHSFN7S1ewj5Zsx8T70Ox6baED5E/tvs9R8K0f06"
-                        phoneNumber: "082112345678"
-                        image: "https://res.cloudinary.com/djsjnrfv0/image/upload/v1702988069/BINAR/mqtkzduziqwhdvxu1vzh.png"
-                        address: null
-                        privilege: "ROOT"
-                        roleId: 1
-                        createdAt: "2024-06-13T15:55:07.000Z"
-                        updatedAt: "2024-06-13T15:55:07.000Z"
-            401:
-              description: Unauthorized
-              content:
-                application/json:
-                  schema:
-                    $ref: '#/components/schemas/FAIL'
-                  example:
-                    status: "FAIL"
-                    message: "Unauthorized"
-            500:
-              description: Internal Server Error
-              content:
-                application/json:
-                  schema:
-                    $ref: '#/components/schemas/FAIL'
-                  example:
-                    status: "FAIL"
-                    message: "Internal Server Error"
-  
+        200:
+          description: Successful response
+          content:
+            application/json:
+              example:
+                status: "OK"
+                message: "Success"
+                data:
+                  id: 1
+                  userId: 1
+                  presenceDate: "2024-06-12T17:00:00.000Z"
+                  checkIn: "2024-06-13T16:02:25.000Z"
+                  checkOut: null
+                  overtime: null
+                  status: "LATE"
+                  createdAt: "2024-06-13T16:02:25.000Z"
+                  updatedAt: "2024-06-13T16:02:25.000Z"
+                  User:
+                    id: 1
+                    name: "root"
+                    email: "root@gmail.com"
+                    encryptedPassword: "$2b$10$XfgiOba1Wff93hHSFN7S1ewj5Zsx8T70Ox6baED5E/tvs9R8K0f06"
+                    phoneNumber: "082112345678"
+                    image: "https://res.cloudinary.com/djsjnrfv0/image/upload/v1702988069/BINAR/mqtkzduziqwhdvxu1vzh.png"
+                    address: null
+                    privilege: "ROOT"
+                    roleId: 1
+                    createdAt: "2024-06-13T15:55:07.000Z"
+                    updatedAt: "2024-06-13T15:55:07.000Z"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FAIL"
+              example:
+                status: "FAIL"
+                message: "Unauthorized"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FAIL"
+              example:
+                status: "FAIL"
+                message: "Internal Server Error"
+
     put:
       tags:
         - presence
@@ -353,7 +353,7 @@ paths:
                     properties:
                       message:
                         example: "Failed to delete presence. Presence not found"
-        
+
         "500":
           description: Internal Server Error
           content:
@@ -377,7 +377,7 @@ paths:
         - api_key: []
       responses:
         "200":
-          description:  Successful response. Retrieves all leave requests.
+          description: Successful response. Retrieves all leave requests.
           content:
             application/json:
               schema:
@@ -465,7 +465,7 @@ paths:
                     properties:
                       message:
                         example: "OTP is invalid."
-    
+
     post:
       tags:
         - leave request
@@ -490,7 +490,7 @@ paths:
                   type: string
                   format: date
                   example: 2024-06-15T13:17:28.475Z
-              
+
       responses:
         "200":
           description: Leave request successful.
@@ -560,7 +560,7 @@ paths:
                     properties:
                       message:
                         example: "OTP is invalid."
-                        
+
   /api/v1/admin/leaves/{id}:
     post:
       tags:
@@ -646,7 +646,6 @@ paths:
                       message:
                         example: "Your account is not exist."
 
-                        
   /api/v1/user/payslips:
     get:
       tags:
@@ -1005,8 +1004,6 @@ paths:
                           type: string
                           example: "2023-10-18T13:42:59.162Z"
 
-                          
-                
         "400":
           description: Unauthorized
           content:
@@ -1029,7 +1026,7 @@ paths:
                     properties:
                       message:
                         example: Unauthorized
-                        
+
         "403":
           description: Forbidden access
           content:
@@ -1053,7 +1050,6 @@ paths:
                     properties:
                       message:
                         example: "Failed to Create Module"
-
 
   /api/v1/user/Register:
     post:
@@ -1080,7 +1076,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  status: 
+                  status:
                     type: string
                     example: OK
                   message:
@@ -1121,7 +1117,7 @@ paths:
       security:
         - api_key: []
       requestBody:
-        description: Register new admin
+        description: Change user password
         content:
           application/json:
             schema:
@@ -1136,7 +1132,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  status: 
+                  status:
                     type: string
                     example: OK
                   message:
@@ -1231,6 +1227,75 @@ paths:
                       message:
                         example: Email or password is invalid.
 
+  /api/v1/user/change-password:
+    put:
+      tags:
+        - user
+      summary: Change Password
+      description: change user password
+      operationId: Change Password
+      security:
+        - api_key: []
+      requestBody:
+        description: Change user password
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/changePassword"
+        required: true
+
+      responses:
+        "201":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/OK"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          type: object
+                          oneOf:
+                            - $ref: "#/components/schemas/changePassword"
+
+        "400":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/FAIL"
+                  - type: object
+                    properties:
+                      message:
+                        example: Failed to update data. Password doesn't match
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/FAIL"
+                  - type: object
+                    properties:
+                      message:
+                        example: Unauthorized
+
+        "500":
+          description: Token expired
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/FAIL"
+                  - type: object
+                    properties:
+                      message:
+                        example: jwt expired
+
   /api/v1/user/roles:
     get:
       tags:
@@ -1318,7 +1383,6 @@ paths:
                       message:
                         example: jwt expired
 
-
   /api/v1/user/users:
     get:
       tags:
@@ -1390,7 +1454,7 @@ paths:
       security:
         - api_key: []
       requestBody:
-        description: Register new admin
+        description: Change user password
         content:
           application/json:
             schema:
@@ -1425,7 +1489,7 @@ paths:
                     properties:
                       message:
                         example: Unauthorized
-                        
+
         "500":
           description: Token expired
           content:
@@ -1437,8 +1501,6 @@ paths:
                     properties:
                       message:
                         example: jwt expired
-                        
-
 
   /api/v1/user/current-user:
     post:
@@ -1492,8 +1554,6 @@ paths:
                           - invalid token
                           - jwt expired
 
-
-                        
   /api/v1/notifications:
     get:
       tags:
@@ -1514,7 +1574,7 @@ paths:
                   - $ref: "#/components/schemas/OK"
                   - type: object
                     properties:
-                      status: 
+                      status:
                         type: string
                         example: OK
                       message:
@@ -1522,12 +1582,12 @@ paths:
                         example: Success.
                       data:
                         allOf:
-                        - $ref: "#/components/schemas/Notif1"
-                        - properties:
-                            notification:
-                              type: array
-                              items: 
-                                $ref: "#/components/schemas/Notif2"
+                          - $ref: "#/components/schemas/Notif1"
+                          - properties:
+                              notification:
+                                type: array
+                                items:
+                                  $ref: "#/components/schemas/Notif2"
 
 components:
   schemas:
@@ -1729,8 +1789,6 @@ components:
           type: string
           example: "2023-10-18T13:42:59.162Z"
 
-          
-  
     Notif1:
       type: object
       properties:
@@ -1743,8 +1801,8 @@ components:
         role:
           type: string
           example: MEMBER
-          
-    Notif2: 
+
+    Notif2:
       type: object
       properties:
         id:
@@ -1760,7 +1818,6 @@ components:
           type: string
           example: 2023-12-19T06:49:23.721Z
 
- 
     Verify:
       type: object
       properties:
@@ -1771,26 +1828,15 @@ components:
           type: string
           example: 031442
 
-    ResendOtp:
+    changePassword:
       type: object
       properties:
-        email:
-          type: string
-          example: test2@gmail.com
-
-    ForgotPassword:
-      type: object
-      properties:
-        email:
-          type: string
-          example: test2@gmail.com
-        otp:
-          type: string
-          example: 658277
         password:
           type: string
-          example: test1234
-
+          example: root
+        newPassword:
+          type: string
+          example: root123
 
   securitySchemes:
     api_key:
