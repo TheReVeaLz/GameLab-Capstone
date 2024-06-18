@@ -1,4 +1,5 @@
 const LeaveRequestRepo = require('../repositories/leaverequest');
+const NotificationService = require('../services/notification');
 const ApplicationError = require('../../config/errors/ApplicationError');
 
 const findAll = async (payload = {}) => {
@@ -41,10 +42,22 @@ const update = async (payload) => {
     }
 }
 
+const confirmLeave = async (leaveReq, status) => {
+    try {
+        const ret = await leaveReq.update({ status });
+        await NotificationService.create(ret.userId, { title: 'Leave Request', message: `Your leave request has been ${status.toLowerCase()}` });
+        
+        return ret;
+    } catch (err) {
+        throw new ApplicationError(`Failed to update data. ${err.message}`,  err.statusCode || 500);
+    }
+}
+
 module.exports = {
     findAll,
     findOne,
     findByPk,
     create,
-    update
+    update,
+    confirmLeave
 }

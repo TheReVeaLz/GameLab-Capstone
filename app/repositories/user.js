@@ -41,7 +41,14 @@ async function findByPk(id) {
 }
 
 async function notification(id) {
-    return await User.findByPk(id, { include: ["notifications"],attributes: ['id', 'name'] });
+    return await User.findByPk(id, {
+        include: {
+            association: "Notifications",
+            limit: 10,
+            order: [ ["id", "DESC"] ]
+        },
+        attributes: ['id', 'name']
+    });
 }
 
 module.exports = {

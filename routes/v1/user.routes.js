@@ -43,6 +43,6 @@ router.post('/user/current-user', AuthMiddleware.authorize, Auth.currentUser)
 router.put('/user/change-password', AuthMiddleware.authorize, Auth.changePassword)
 
 // get user notification
-router.get('/notifications', AuthMiddleware.authorize, Auth.notification )
+router.get('/user/notifications', AuthMiddleware.authorize, Auth.notification )
 
 module.exports = router

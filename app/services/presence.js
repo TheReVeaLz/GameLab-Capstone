@@ -47,6 +47,7 @@ const presence = async (data) => {
             if (todayPresence.status != "LATE" && today > checkOutTime)
                 payload.overtime = Helper.GetHoursDifference(today, checkOutTime)
             
+            await notificationService.create(data.userId, { title: 'Presence', message: 'You have check out successfully.' });
             return await todayPresence.update(payload);
         }
         
@@ -64,7 +65,7 @@ const presence = async (data) => {
         }
         
         // Create notification for check-in
-        await notificationService.create(data.userId, { title: 'Check-In', message: 'You have checked in successfully.' });
+        await notificationService.create(data.userId, { title: 'Presence', message: 'You have checked in successfully.' });
         
         // Save the presence data
         return await presenceRepository.create(data);

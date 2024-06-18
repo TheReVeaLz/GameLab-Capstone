@@ -1,5 +1,6 @@
 const payslipRepo = require('../repositories/payslip');
 const presenceRepository = require('../repositories/presence');
+const NotificationService = require('../services/notification');
 const ApplicationError = require('../../config/errors/ApplicationError');
 const Helper = require('../../middlewares/helper')
 const { Op } = require('sequelize');
@@ -64,15 +65,22 @@ const getPayslip = async (payload) => {
 
 const generatePayslips = async (payload) => {
     try {
-        const { periodStart, periodEnd } = payload;
+        // const { periodStart, periodEnd } = payload;
+        const periodStart = new Date(payload.periodStart);
+        const periodEnd = new Date(payload.periodEnd);
         if (!periodStart || !periodEnd)
             throw new Error("Please fill period start and end.");
+        Helper.DayLocal(periodStart), Helper.DayLocal(periodEnd);
 
         const presenceInfo = await presenceRepository.findAll({
             presenceDate: { [Op.gte]: periodStart, [Op.lte]: periodEnd }
         });
+        console.log(presenceInfo);
         
-        return await payslipRepo.bulkCreate(parsePresence(payload, presenceInfo));
+        const ret = await payslipRepo.bulkCreate(parsePresence(payload, presenceInfo));
+        ret.forEach((item) => (NotificationService.create(item.userId, { title: 'Payment', message: `This month net worth is ${item.netWorth.toLocaleString("id-ID", { style: "currency", currency:"IDR" })}` })));
+        
+        return ret;
     } catch (err) {
         throw new ApplicationError(`Failed to get the data. ${err.message}`);
     }

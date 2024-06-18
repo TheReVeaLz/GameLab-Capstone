@@ -7,6 +7,8 @@ const findByPk = async (req, res, next) => {
         const { id } = req.params
         req.leaveReq = await leaveReqService.findByPk(id);
         
+        if (!req.leaveReq)
+            return res.status(404).json({ status: "FAIL", message: "Presence data not found." });
         next();
     } catch (err) {
         res.status(err.statusCode || 500).json({ status: "FAIL", message: err.message });
@@ -73,7 +75,7 @@ async function confirmLeave(req, res) {
         if (status === "ACCEPTED")
             await submitLeavePresence(req.leaveReq.userId, startDate, endDate);
         
-        const ret = await req.leaveReq.update({ status });
+        const ret = await leaveReqService.confirmLeave(req.leaveReq, status);
         res.json({ status: "OK", message: "The request is confirmed.", data: ret });
     } catch (err) {
         res.status(err.statusCode || 400).json({ status: "FAIL", message: err.message });

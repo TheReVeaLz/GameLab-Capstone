@@ -1565,7 +1565,7 @@ paths:
                           - invalid token
                           - jwt expired
 
-  /api/v1/notifications:
+  /api/v1/user/notifications:
     get:
       tags:
         - user
