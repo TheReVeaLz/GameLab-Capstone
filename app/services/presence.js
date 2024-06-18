@@ -11,6 +11,21 @@ const bulkCreate = async (data) => {
     }
 }
 
+const getTodayPresence = async (data) => {
+    try {
+        data.presenceDate = Helper.DayLocal();
+        
+        const todayPresence = await presenceRepository.findOne({ userId: data.userId, presenceDate: data.presenceDate });
+
+        if (todayPresence)
+            return todayPresence;
+        
+        return {};
+    } catch (err) {
+        throw new ApplicationError(`Failed to get presence. ${err.message}`, 400);
+    }
+}
+
 const presence = async (data) => {
     try {
         // Get the current time in WIB (Western Indonesia Time)
@@ -24,7 +39,7 @@ const presence = async (data) => {
         
         if (todayPresence) {
             if (todayPresence.checkIn && todayPresence.checkOut)
-                throw new Error("Already presence today.");
+                return;
             
             const payload = { checkOut: today };
             const checkOutTime = Helper.DayLocal(15);
@@ -98,6 +113,7 @@ const deletePresence = async (id) => {
 
 module.exports = {
     bulkCreate,
+    getTodayPresence,
     presence,
     getPresenceById,
     getAllPresences,

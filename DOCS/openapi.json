@@ -49,6 +49,307 @@
         "tags": [
           "presence"
         ],
+        "summary": "Get today presence detail",
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Retrieve details of a specific presence record",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "OK",
+                  "message": "Success",
+                  "data": {
+                    "id": 1,
+                    "userId": 1,
+                    "presenceDate": "2024-06-12T17:00:00.000Z",
+                    "checkIn": "2024-06-13T16:02:25.000Z",
+                    "checkOut": null,
+                    "overtime": null,
+                    "status": "LATE",
+                    "createdAt": "2024-06-13T16:02:25.000Z",
+                    "updatedAt": "2024-06-13T16:02:25.000Z",
+                    "User": {
+                      "id": 1,
+                      "name": "root",
+                      "email": "root@gmail.com",
+                      "encryptedPassword": "$2b$10$XfgiOba1Wff93hHSFN7S1ewj5Zsx8T70Ox6baED5E/tvs9R8K0f06",
+                      "phoneNumber": "082112345678",
+                      "image": "https://res.cloudinary.com/djsjnrfv0/image/upload/v1702988069/BINAR/mqtkzduziqwhdvxu1vzh.png",
+                      "address": null,
+                      "privilege": "ROOT",
+                      "roleId": 1,
+                      "createdAt": "2024-06-13T15:55:07.000Z",
+                      "updatedAt": "2024-06-13T15:55:07.000Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FAIL"
+                },
+                "example": {
+                  "status": "FAIL",
+                  "message": "Failed to get presence."
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "presence"
+        ],
+        "summary": "Create presence record for check-in or check-out",
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Create a new presence record with the provided details.",
+        "responses": {
+          "200": {
+            "description": "Already presence today.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OK"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "example": "Already presence today."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Presence created successfully.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "OK",
+                  "message": "Presence data was created successfully.",
+                  "data": {
+                    "id": 2,
+                    "userId": 1,
+                    "presenceDate": "2024-06-13T17:00:00.000Z",
+                    "checkIn": "2024-06-13T23:33:35.000Z",
+                    "checkOut": "2024-06-13T23:53:50.806Z",
+                    "overtime": null,
+                    "status": "ONTIME",
+                    "createdAt": "2024-06-13T23:33:35.000Z",
+                    "updatedAt": "2024-06-13T23:53:50.811Z",
+                    "User": {
+                      "id": 1,
+                      "name": "root",
+                      "email": "root@gmail.com",
+                      "encryptedPassword": "$2b$10$XfgiOba1Wff93hHSFN7S1ewj5Zsx8T70Ox6baED5E/tvs9R8K0f06",
+                      "phoneNumber": "082112345678",
+                      "image": "https://res.cloudinary.com/djsjnrfv0/image/upload/v1702988069/BINAR/mqtkzduziqwhdvxu1vzh.png",
+                      "address": null,
+                      "privilege": "ROOT",
+                      "roleId": 1,
+                      "createdAt": "2024-06-13T15:55:07.000Z",
+                      "updatedAt": "2024-06-13T15:55:07.000Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Invalid or missing API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/FAIL"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "example": "Unauthorized"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/FAIL"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "example": "Failed to create presence"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/presences": {
+      "get": {
+        "tags": [
+          "presence"
+        ],
+        "summary": "Get all presences for current user",
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "create a display of the entire presence",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "OK",
+                  "message": "Success",
+                  "data": [
+                    {
+                      "id": 1,
+                      "userId": 1,
+                      "presenceDate": "2024-06-12T17:00:00.000Z",
+                      "checkIn": "2024-06-13T16:02:25.000Z",
+                      "checkOut": null,
+                      "overtime": null,
+                      "status": "LATE",
+                      "createdAt": "2024-06-13T16:02:25.000Z",
+                      "updatedAt": "2024-06-13T16:02:25.000Z",
+                      "User": {
+                        "id": 1,
+                        "name": "root",
+                        "email": "root@gmail.com",
+                        "encryptedPassword": "$2b$10$XfgiOba1Wff93hHSFN7S1ewj5Zsx8T70Ox6baED5E/tvs9R8K0f06",
+                        "phoneNumber": "082112345678",
+                        "image": "https://res.cloudinary.com/djsjnrfv0/image/upload/v1702988069/BINAR/mqtkzduziqwhdvxu1vzh.png",
+                        "address": null,
+                        "privilege": "ROOT",
+                        "roleId": 1,
+                        "createdAt": "2024-06-13T15:55:07.000Z",
+                        "updatedAt": "2024-06-13T15:55:07.000Z"
+                      }
+                    },
+                    {
+                      "id": 2,
+                      "userId": 1,
+                      "presenceDate": "2024-06-13T17:00:00.000Z",
+                      "checkIn": "2024-06-13T23:33:35.000Z",
+                      "checkOut": null,
+                      "overtime": null,
+                      "status": "ONTIME",
+                      "createdAt": "2024-06-13T23:33:35.000Z",
+                      "updatedAt": "2024-06-13T23:33:35.000Z",
+                      "User": {
+                        "id": 1,
+                        "name": "root",
+                        "email": "root@gmail.com",
+                        "encryptedPassword": "$2b$10$XfgiOba1Wff93hHSFN7S1ewj5Zsx8T70Ox6baED5E/tvs9R8K0f06",
+                        "phoneNumber": "082112345678",
+                        "image": "https://res.cloudinary.com/djsjnrfv0/image/upload/v1702988069/BINAR/mqtkzduziqwhdvxu1vzh.png",
+                        "address": null,
+                        "privilege": "ROOT",
+                        "roleId": 1,
+                        "createdAt": "2024-06-13T15:55:07.000Z",
+                        "updatedAt": "2024-06-13T15:55:07.000Z"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/FAIL"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "example": "Unauthorized"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/FAIL"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "example": "Failed to get presence."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/presences": {
+      "get": {
+        "tags": [
+          "presence"
+        ],
         "summary": "Get all presences",
         "security": [
           {
@@ -163,129 +464,14 @@
             }
           }
         }
-      },
-      "post": {
-        "tags": [
-          "presence"
-        ],
-        "summary": "Create a new presence record",
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "description": "Create a new presence record with the provided details.",
-        "responses": {
-          "201": {
-            "description": "Presence created successfully.",
-            "content": {
-              "application/json": {
-                "example": {
-                  "status": "OK",
-                  "message": "Presence data was created successfully.",
-                  "data": {
-                    "id": 2,
-                    "userId": 1,
-                    "presenceDate": "2024-06-13T17:00:00.000Z",
-                    "checkIn": "2024-06-13T23:33:35.000Z",
-                    "checkOut": "2024-06-13T23:53:50.806Z",
-                    "overtime": null,
-                    "status": "ONTIME",
-                    "createdAt": "2024-06-13T23:33:35.000Z",
-                    "updatedAt": "2024-06-13T23:53:50.811Z",
-                    "User": {
-                      "id": 1,
-                      "name": "root",
-                      "email": "root@gmail.com",
-                      "encryptedPassword": "$2b$10$XfgiOba1Wff93hHSFN7S1ewj5Zsx8T70Ox6baED5E/tvs9R8K0f06",
-                      "phoneNumber": "082112345678",
-                      "image": "https://res.cloudinary.com/djsjnrfv0/image/upload/v1702988069/BINAR/mqtkzduziqwhdvxu1vzh.png",
-                      "address": null,
-                      "privilege": "ROOT",
-                      "roleId": 1,
-                      "createdAt": "2024-06-13T15:55:07.000Z",
-                      "updatedAt": "2024-06-13T15:55:07.000Z"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request. The request is malformed or missing required parameters.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Required parameters are missing"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized. Invalid or missing API key.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Unauthorized"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error. Something went wrong on the server.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to create presence"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
       }
     },
-    "/api/v1/user/presence/{id}": {
+    "/api/v1/admin/presence/{id}": {
       "get": {
         "tags": [
           "presence"
         ],
-        "summary": "Get detaisl Presence",
+        "summary": "Get presence detail",
         "parameters": [
           {
             "in": "path",
@@ -364,217 +550,6 @@
                 "example": {
                   "status": "FAIL",
                   "message": "Internal Server Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "presence"
-        ],
-        "summary": "Update Presence Details by ID",
-        "description": "Update presence details for the specified presence ID.",
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "format": "integer",
-              "example": "1"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Presence updated successfully.",
-            "content": {
-              "application/json": {
-                "example": {
-                  "status": "OK",
-                  "message": "Presence data was updated successfully.",
-                  "data": {
-                    "id": 2,
-                    "userId": 1,
-                    "presenceDate": "2024-06-13T17:00:00.000Z",
-                    "checkIn": "2024-06-13T23:33:35.000Z",
-                    "checkOut": "2024-06-14T06:57:19.286Z",
-                    "overtime": null,
-                    "status": "ONTIME",
-                    "createdAt": "2024-06-13T23:33:35.000Z",
-                    "updatedAt": "2024-06-13T23:57:19.324Z"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request. The request is malformed or missing required parameters.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to update presence. Presence not found"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized. Invalid or missing API key.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Unauthorized"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error. Something went wrong on the server.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Internal Server Error"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "presence"
-        ],
-        "summary": "Delete presence by ID",
-        "description": "Delete the presence record with the specified ID.",
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string",
-              "format": "integer",
-              "example": "1"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Presence deleted successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/OK"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "status": {
-                          "type": "string",
-                          "example": "OK"
-                        },
-                        "message": {
-                          "type": "string",
-                          "example": "Presence data was Deleted successfully."
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request. The request is malformed or missing required parameters.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Failed to delete presence. Presence not found"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/FAIL"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "example": "Internal Server Error"
-                        }
-                      }
-                    }
-                  ]
                 }
               }
             }
