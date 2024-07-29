@@ -1,0 +1,24 @@
+{
+  "development": {
+    "username": "zAayATgECJWM7pfl",
+    "password": "YFX8cZP3uc50CWxM",
+    "database": "HNWWhdeZrfClViGl",
+    "host": "educalab.id",
+    "port" : 3307,
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "db_gamelab_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "zAayATgECJWM7pfl",
+    "password": "YFX8cZP3uc50CWxM",
+    "database": "HNWWhdeZrfClViGl",
+    "host": "educalab.id:3307",
+    "dialect": "mysql"
+  }
+}
